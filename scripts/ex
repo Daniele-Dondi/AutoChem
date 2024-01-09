@@ -1,0 +1,55 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "Extract the last valid geometry of an output file"
+    echo "and create a new input file attaching the job defined in the corresponding header"
+    echo "use: $0 file.out"
+exit
+fi
+rm x.out 2>/dev/null
+if [ -a GAUSSIAN ];   then
+ awk 'f { if (/GHZ/){
+                    printf ("%s", buf)>"x.out"; f = 0; g=0; h=0; buf=""
+                } else
+                    buf = buf $0 ORS
+             }
+      g{if (/Number/){h=1}}
+      h{if (/----/){f=1}}
+           / orientation:/ { g = 1 }' $1
+ awk 'f { if (/--------/){
+                    printf ("%s", buf)>"x2.out"; f = 0; buf=""
+                } else
+                    buf = buf $0 ORS
+             }
+           /----------/ { f = 1 }' x.out
+
+ awk '{split($0,a," "); max=a[1]; atom[max]=a[2]; x[max]=a[4]; y[max]=a[5]; z[max]=a[6]; } END { system("cp gauheader x3.out"); for (counter = 1; counter <= max; counter++)
+ print (atom[counter], x[counter], y[counter], z[counter])>>"x3.out"; print "">>"x3.out"; print "">>"x3.out";}' x2.out
+ filename="${1%.*}".gjf
+ rm $filename 2> /dev/null
+ mv x3.out $filename
+ rm x.out 2>/dev/null
+ rm x2.out 2>/dev/null
+fi
+if [ -a ORCA ];   then
+ awk 'f { if (/^$/){
+                    printf ("%s", buf)>"x.out";  print ("--------------")>"x.out";f = 0; g=0;  buf=""
+                } else
+                    buf = buf $0 ORS
+             }
+      g{ if (/---------------------------------/){f=1;}}
+            (/CARTESIAN/&&/(ANGSTROEM)/) { g = 1;}' $1
+ if ! [ -s x.out ]; then 
+  echo file $1 does not contain valid geometries
+  exit 1
+ fi
+ awk '{if (/--------------/){lastbuf=buf; buf=""} else {buf = buf $0 ORS} } END{printf ("%s", lastbuf)>"x2.out";}' x.out
+ filename="${1%.*}".inp
+ rm $filename 2> /dev/null
+ cat orcaheader>x3.out
+ cat x2.out>>x3.out
+ echo "*">>x3.out
+ mv x3.out $filename
+ rm x.out 2>/dev/null
+ rm x2.out 2>/dev/null
+fi
+

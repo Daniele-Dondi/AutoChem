@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ -a TSP ];   then
+  tsp | grep 'run'
+  tsp>que.txt
+  awk '{name=substr($NF,6,index($NF,".")-6); if($2=="finished"){system("cp "$3" "name".out"); if($4!="0"){system("echo 'ERROR'>"name".err")}}}' que.txt 2>/dev/null
+  rm que.txt 2>/dev/null
+  tsp -C
+fi
+if [ -a SLURM ];   then
+  squeue -u ddondi00
+fi
+

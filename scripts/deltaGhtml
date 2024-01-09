@@ -1,0 +1,25 @@
+#!/bin/bash
+if ! [ -f "REACTIONS.txt" ]; then echo "File REACTIONS.txt not present"; exit; fi
+dos2unix REACTIONS.txt 2>/dev/null
+if ! [ -f "energies.txt" ]; then ./en; fi
+echo "<html><table>" > deltaG.html
+awk 'FILENAME==ARGV[1] {split($0,a,"="); split(a[2],e," "); split($0,b,"."); energy[b[1]]=e[1]; }
+     FILENAME==ARGV[2] {split ($0,react,","); split(react[1],a,"R"); nreag=split(a[1],r,"_"); nprod=split(a[2],p,"_"); reaction=p[1];
+     print "<tr>";
+     for (i=1;i<nreag;i++) {printf "<td><img src=\""r[i]".png\"></td>"; if (i<nreag-1) printf "<td><h1>+</h1></td>";} printf "<td><h1>=</h1></td>";
+     for (j=2;j<=nprod;j++) {printf "<td><img src=\""p[j]".png\"></td>"; if (j<nprod) printf "<td><h1>+</h1></td>";}
+     printf("<td><h1>Reaction type "reaction"</h1></td><td><h1>deltaG = ");
+     c="echo \"(";
+     for (j=2;j<=nprod;j++) {c=c energy[p[j]];}
+     c=c  "-(";
+     for (i in r) {c=c  energy[r[i]];}
+     c=c  "))*627.51\"|bc|tr \"\\n\" \" \" ";
+     system(c);
+     print " kcal/mol</h1></td>";
+     print "</tr>";
+}' energies.txt REACTIONS.txt >> deltaG.html
+echo "</table></html>" >> deltaG.html
+echo "Results saved in deltaG.html";
+
+
+

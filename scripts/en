@@ -1,0 +1,25 @@
+#!/bin/bash
+shopt -s nullglob
+if [ -a GAUSSIAN ];   then
+ for f in *.out; do  echo -n . > /dev/tty; a=$(grep "Sum of electronic and thermal Free Energies=" $f);  b=$(./freq $f); echo $f $a $b; done > energies.tmp
+ sort -n energies.tmp > energies.txt
+ rm energies.tmp
+ calculated=$(wc -l <energies.txt)
+ shopt -u nullglob
+ total=$(ls *.gjf 2>/dev/null | wc -l)
+ echo
+ echo $calculated" Compounds calculated out of "$total
+ echo
+fi
+if [ -a ORCA ];   then
+ for f in *.out; do  echo -n . > /dev/tty; a=$(grep "Final Gibbs free energy" $f | cut -d "-" -f 2 | cut -d " " -f 1);  b=$(./freq $f); echo $f Sum of electronic and thermal Free Energies= -$a $b; done > energies.tmp
+ sort -n energies.tmp > energies.txt
+ rm energies.tmp
+ calculated=$(wc -l <energies.txt)
+ shopt -u nullglob
+ total=$(ls *.inp 2>/dev/null | wc -l)
+ echo
+ echo $calculated" Compounds calculated out of "$total
+ echo
+fi
+

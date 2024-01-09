@@ -1,0 +1,37 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "Restart a calculation having negative frequencies"
+    echo "use: $0 file.out"
+exit
+fi
+ ./ex $1
+ ./ex-freq $1
+
+if [ -a GAUSSIAN ];   then
+ filegjf="${1%.*}".gjf
+ tail -n +7 $filegjf > f.tmp
+ cp gauheader $filegjf
+ awk 'FILENAME==ARGV[1] {split($0,a," "); max=FNR; atom[max]=a[1]; x[max]=a[2]; y[max]=a[3]; z[max]=a[4]; }
+     FILENAME==ARGV[2] {split($0,a," "); printf atom[FNR]" ";
+      system("echo \""x[FNR]"+"a[1]"\"|bc|tr \"\\n\" \" \" ");
+      system("echo \""y[FNR]"+"a[2]"\"|bc|tr \"\\n\" \" \" ");
+      system("echo \""z[FNR]"+"a[3]"\"|bc");
+ }' f.tmp deltafreq.tmp >> $filegjf
+ echo "" >> $filegjf
+ sed -i 's/ 0 / 0.0 /g' $filegjf
+ #rm f.tmp
+ #rm deltafreq.tmp
+fi
+if [ -a ORCA ];   then
+ fileinp="${1%.*}".inp
+ tail -n +3 $fileinp > f.tmp
+ cp orcaheader $fileinp
+ awk 'FILENAME==ARGV[1] {split($0,a," "); max=FNR; atom[max]=a[1]; x[max]=a[2]; y[max]=a[3]; z[max]=a[4]; }
+     FILENAME==ARGV[2] {split($0,a," "); printf atom[FNR]" ";
+      system("echo \""x[FNR]"+"a[1]"\"|bc|tr \"\\n\" \" \" ");
+      system("echo \""y[FNR]"+"a[2]"\"|bc|tr \"\\n\" \" \" ");
+      system("echo \""z[FNR]"+"a[3]"\"|bc");
+ }' f.tmp deltafreq.tmp >> $fileinp
+ echo "*" >> $fileinp
+ #sed -i 's/ 0 / 0.0 /g' $fileinp
+fi

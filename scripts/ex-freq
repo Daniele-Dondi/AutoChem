@@ -1,0 +1,26 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "Extracts vector for the first negative frequency"
+    echo "and save it in deltafreq.tmp"
+    echo "use: $0 file.out"
+exit
+fi
+if [ -a GAUSSIAN ];   then
+ awk 'f { if (/4                      5/){
+                    printf ("%s", buf)>"freq.tmp"; f = 0; g=0; h=0; buf=""
+                } else
+                    buf = buf $0 ORS
+             }
+      g{if (/Atom/){f=1}}
+           / Frequencies/ { g = 1 }' $1
+ awk '{split($0,a," "); max=a[1]; x[max]=a[3]; y[max]=a[4]; z[max]=a[5]; } END {  for (counter = 1; counter <= max; counter++)
+ print (x[counter], y[counter], z[counter])>"deltafreq.tmp"; }' freq.tmp
+ rm freq.tmp
+fi
+if [ -a ORCA ];   then
+ awk 'BEGIN { FS=":" } /imaginary/ {print " "$1"        ">"temp.tmp"; } ' $1
+ #src=$(cat temp.tmp)
+ src=$(head -n 1 temp.tmp) # extracts the first negative frequency
+ awk -v src="$src" '$0~src{columntoread=((src+0)%6+2); num=src+6; stop="      "num; g=1; next} g{ if ($0~stop) {g=0}else{c=c+1; buf=buf" "$columntoread; if (c==3){c=0; print buf>"deltafreq.tmp"; buf="";}}} ' $1
+fi
+

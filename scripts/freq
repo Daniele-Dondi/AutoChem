@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "use: $0 file.out"
+exit
+fi
+if [ -a GAUSSIAN ];   then
+ var=$(grep 'Frequencies' $1 |  cut -c 16-35 | head -1)
+ freq=$(echo $var"<0" | bc  2> /dev/null)
+ varint=${var%.*}
+ if ((freq == 1)); then echo " NEGATIVE frequency";
+ elif ((varint == 0)); then  echo "------- Not Yet Ready -------";
+ else echo " OK"; fi
+fi
+if [ -a ORCA ];   then
+ var=$(grep 'VIBRATIONAL FREQUENCIES' $1 | wc -l)
+ freq=$(grep 'imaginary' $1 | wc -l)
+ varint=${var%.*}
+ if ((freq >= 1)); then echo " NEGATIVE frequency";
+ elif ((varint == 0)); then  echo "------- Not Yet Ready -------";
+ else echo " OK"; fi
+fi
+

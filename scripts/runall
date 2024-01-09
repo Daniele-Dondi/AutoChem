@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -a GAUSSIAN ];   then
+ for i in *.gjf; do ./run $i; done
+fi
+if [ -a ORCA ];   then
+ for i in *.inp; do ./run $i; done
+fi

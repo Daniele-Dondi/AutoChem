@@ -1,0 +1,3 @@
+#!/bin/bash
+for f in *.out; do b=$(./freq $f); echo $f $b; done
+

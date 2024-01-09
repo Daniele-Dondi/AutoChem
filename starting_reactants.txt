@@ -1,0 +1,8 @@
+# Insert here the starting reactants to be loaded at startup
+# Insert the SMILES string, one for each line
+# the text at the right of hashtag character will be removed automatically and considered as a comment
+
+
+C=O # fomaldehyde
+
+CC=O # acetaldehyde

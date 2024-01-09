@@ -1,0 +1,15 @@
+chmod +x check
+chmod +x freq
+chmod +x ex
+chmod +x en
+chmod +x clean
+chmod +x combine
+chmod +x deltaG
+chmod +x deltaGhtml
+chmod +x run
+chmod +x runall
+chmod +x ex-freq
+chmod +x freqall
+chmod +x q
+chmod +x slurm_settings
+

@@ -1,0 +1,210 @@
+#!/bin/bash
+if [ -a GAUSSIAN ];   then
+ ext=".gjf"
+ if ! [ -a gauheader ]; then
+  echo "gauheader not found. Please create a text file with that name containing the correct job for Gaussian"
+  echo "example:"
+  printf "%nprocshared=4\n# opt freq b3lyp 6-31G(d)\n\nCheReNetw rerun\n\n0 1\n"
+  exit
+ fi
+elif [ -a ORCA ];   then
+ ext=".inp"
+ if ! [ -a orcaheader ]; then
+  echo "orcaheader not found. Please create a text file with that name containing the correct job for ORCA"
+  echo "example:"
+  printf "! XTB2 opt numfreq\n* xyz 0 1\n"
+  exit
+ fi
+else
+ echo "Calculation program not indicated. Possible choices are ORCA or Gaussian"
+ read -p "Press O for ORCA. Press G for Gaussian. Any other keys to exit " -n 1 -r
+ echo
+  if [[ $REPLY =~ ^[Oo]$ ]]
+   then
+    touch ORCA
+    echo "Default program: ORCA"
+    echo launch $0 again to restart the missing calculations
+    exit
+  elif [[ $REPLY =~ ^[Gg]$ ]]
+    then
+    touch GAUSSIAN
+    echo "Default program: Gaussian"
+    echo launch $0 again to restart the missing calculations
+    exit
+  else
+    exit
+  fi
+fi
+
+if ! [ -a TSP ] && ! [ -a SLURM ]; then
+ echo "Default task spooler not indicated. Possible choices are TSP or SLURM"
+ read -p "Press T for TSP. Press S for SLURM. Any other keys to exit " -n 1 -r
+ echo
+  if [[ $REPLY =~ ^[Tt]$ ]]
+   then
+    touch TSP
+    echo "Default task spooler: tsp"
+    echo launch $0 again to restart the missing calculations
+    exit
+  elif [[ $REPLY =~ ^[Ss]$ ]]
+    then
+    touch SLURM
+    echo "Default task spooler: slurm"
+    echo launch $0 again to restart the missing calculations
+    exit
+  else
+    exit
+  fi
+fi 
+
+./q > queue.que
+./en 2>/dev/null #try to retrieve energies from out files
+errors=0
+grep 'NEGATIVE' energies.txt | cut -d ' ' -f1 > negfreq.tmp       #check if there are negative frequencies
+if [ -s negfreq.tmp ] ; then
+ echo "----------------------------------------------------------------"
+ echo " Some negative frequencies detected. Trying to start them again"
+ echo "----------------------------------------------------------------"
+ echo ""
+ echo "Number of calculations to restart:"
+ cat negfreq.tmp | wc -l
+  while read line
+   do name=$(echo $line | cut -f 1 -d ".")
+   i=1
+   while [ -f $name$ext"-old"$i ] #try to find the first available number
+    do
+     ((i++))
+   done
+   mv $name$ext $name$ext"-old"$i #save the old input file
+   ./combine $name".out"
+   mv $name".out" $name".old"$i #save the old output file
+   ./run $name$ext
+   echo restarted $name for a negative frequency >> restarted.txt
+  done < negfreq.tmp
+ errors=1
+fi
+rm err.txt 2>/dev/null
+find *.err -size +0M > err.txt 2>/dev/null     #check if some files exited with error
+if [ -s err.txt ] ; then
+ echo "----------------------------------------------------------"
+ echo " Some calculations went wrong. Trying to start them again"
+ echo "----------------------------------------------------------"
+ echo ""
+ echo "Number of calculations to restart:"
+ wc -l err.txt | cut -d " " -f 1
+ echo ""
+ while read line
+  do name=$(echo $line | cut -f 1 -d ".")
+  i=1
+  while [ -f $name$ext"-old"$i ] #try to find the first available number
+   do
+    ((i++))
+  done
+  mv $name$ext $name$ext"-old"$i
+  ./ex $name".out"
+  if ! [ $? -eq 0 ]; then
+   echo OPS! Something went wrong
+   echo tried to restart $name for error in calculation but something went wrong>> restarted.txt
+   exit
+  fi
+  mv $name".out" $name".old"$i
+  ./run $name$ext
+  echo restarted $name for error in calculation >> restarted.txt
+ done < err.txt
+ errors=1
+ rm *.err 2>/dev/null
+fi
+
+tail -n +2 queue.que > q2.que
+if [ ! -s q2.que ] ; then     #run queue is empty
+ numout=$(ls *.out 2>/dev/null | wc -l)
+  if [ $numout -eq 0 ]; then    #no output files found
+   numinput=$(ls *$ext 2>/dev/null | wc -l)
+   if [ ! $numinput -eq 0 ]; then  #input files are present
+    read -p "Start all the calculations? [y/n] " -n 1 -r   #ask if we have to kick start calculations
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+     then
+     rm restarted.txt 2>/dev/null
+     rm notyetready.txt 2>/dev/null
+     rm *.old? 2>/dev/null
+     rm *.inp-old? 2>/dev/null
+     ./runall
+     echo "Calculations started"
+    fi
+   fi
+   exit
+  fi
+ if [ $errors -eq 0 ]; then
+   calculated=$(wc -l <energies.txt)
+   total=$(ls *$ext 2>/dev/null | wc -l)
+   if ! [ $total -eq $calculated ]; then 
+    echo "Some calculations are missing"  
+    rm missing.txt 2>/dev/null
+    for f in *$ext; do 
+     filename=$(echo $f | cut -f 1 -d ".")
+     if ! [ -s $filename.out ]; then echo  $filename.out>>missing.txt; fi
+    done
+    missing=$(cat missing.txt | wc -l)
+    echo $missing files are missing
+    read -p "Calculate missing files? [y/n] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+     then
+      while read line
+       do  name=$(echo $line | cut -f 1 -d ".")
+        ./run $name$ext
+      done < missing.txt
+    fi
+    exit
+   fi
+   grep 'Not Yet' energies.txt | cut -f 1 -d '.' > notyetready.txt
+   if  [ -s notyetready.txt ]
+    then 
+     notyet=$(cat notyetready.txt | wc -l)
+     echo $notyet inputs gave permanent errors and energies have not been calculated 
+     echo Here it is the list of the files:
+     cat notyetready.txt
+     echo try to open the corresponding .out file to understand what went wrong
+     read -p "Press i to ignore the error and go on on energy calculations. Press r to try to recalculate. Any other keys to exit " -n 1 -r
+     echo
+      if [[ $REPLY =~ ^[Rr]$ ]]
+     then
+      while read -r line; do echo ERROR> $line.err; done < "notyetready.txt"
+      echo launch $0 again to restart the missing calculations
+      exit
+     fi
+     if ! [[ $REPLY =~ ^[Ii]$ ]]
+      then
+       exit
+     fi
+    echo DeltaG calculations involving the above molecules will have weird values
+   fi
+   echo "-----------------------------"
+   echo " All calculations terminated"
+   echo "-----------------------------"
+   echo
+   echo "Results are saved in energies.txt"
+   echo
+   if [ -f REACTIONS.txt ]; then
+    read -p "Calculate reactions delta G? [y/n] " -n 1 -r   
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+     then
+     ./deltaG
+    fi
+   else
+    echo "Upload REACTIONS.txt"
+    echo "And type ./deltaG to calculate reactions delta G"
+   fi
+ fi
+else
+ echo 	
+ echo "          Calculations are still running"
+ echo
+fi
+
+rm *.7 2>/dev/null
+rm *.que 2>/dev/null
+rm *.tmp 2>/dev/null
+rm err.txt 2>/dev/null

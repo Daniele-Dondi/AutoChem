@@ -1,0 +1,13 @@
+#!/bin/bash
+./q > queue.que
+tail -n +2 queue.que > q2.que
+if [  -s q2.que ] ; then
+echo "Calculations are still running"
+rm *.que
+exit
+fi
+#rm *.gjf
+#rm *.err
+rm *.7 2>/dev/null
+rm -r $CINECA_SCRATCH/g16* 2>/dev/null
+for f in /tmp/*; do rm $f 2>/dev/null; done
