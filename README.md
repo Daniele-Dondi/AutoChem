@@ -25,7 +25,7 @@
  reactions and/or reactants.
 
  IMPORTANT:
- The starting conditions (reactants and reactions) are defined in the function Set_Initial_Conditions. 
+ The starting conditions (reactants and reactions) are defined in the files starting_reactants.txt and starting_reactions.txt.
  Anyway, a basic editor is present in the program for inserting/enabling and disabling both reagents 
  and reactions.
 
@@ -36,8 +36,8 @@
      molecular weight)
  REACTIONS.txt: A list of all reactions calculated or downloaded from KEGG (useful for the determination of reactions 
      free energies)
- reactions.html: A html file containg the visual representation of reactions considered and calculated.
  SUMMARY.txt: A file containing summary informations for the calculations made. This is an important log
  file.
- smarts_reactions.txt: A text file containing all the reactions inserted by user in smarts format together with 
+ reactions.html: A html file containing the visual representation of reactions considered and calculated.
+ smarts_reactions.txt: A text file containing all the reactions inserted by user in SMARTS format together with 
      auxiliary reagents and products
