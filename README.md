@@ -30,7 +30,7 @@
  and reactions.
 
  The program creates some supplementary files:
- COMPOUNDS.csv: A list of the compound number, its molecular formula and MW. 
+ COMPOUNDS.csv: A list of the compound number, its molecular formula and MW. <br>
      Energy at the rdkit level is also added if the optimization flag is enabled
  FREQUENCY.csv: A frequency distribution of molecular weights (aka: number of compounds having the same
      molecular weight)
