@@ -1,0 +1,16 @@
+Starting time: 2023-12-04 10:29:41.016529
+Type of job: KEGG download module M00004
+KEGG names of module(s) explored: 
+Pentose phosphate pathway (Pentose phosphate cycle)
+
+    Warning messages:
+H+ was converted automatically to H3O+
+water was added to reaction R02736 to allow the formation of H3O+
+water was added to reaction R10907 to allow the formation of H3O+
+water was added to reaction R01528 to allow the formation of H3O+
+water was added to reaction R10221 to allow the formation of H3O+
+
+
+TOTAL NUMBER OF COMPOUNDS: 18 involved in 12 REACTIONS
+ calculated in 39.44 seconds
+

@@ -1,0 +1,11 @@
+Starting time: 2023-12-10 13:33:49.577065
+Type of job: rdkit calculation
+Reactions considered in this calculation (SMARTS format):
+0) [C:1]=[O:2].[C:3][C:4](=[O:5])>>[O:5]=[C:4][C:3][C:1][O:2]
+1) [O]-[C:1]-[CH:2]-[*:3]>>[C:1]=[C:2]-[*:3]
+
+Number of cycles calculated: 2
+
+TOTAL NUMBER OF COMPOUNDS: 14 involved in 12 REACTIONS
+ calculated in 0.05 seconds
+

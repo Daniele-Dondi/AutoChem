@@ -1,0 +1,12 @@
+C01172 C00006 C00001  = C01236 C00005 C00080 , Reaction type 02736, deltaG =, 70.20662201 , kcal/mol
+C01172 C00003 C00001  = C01236 C00004 C00080 , Reaction type 10907, deltaG =, 304.45256585 , kcal/mol
+C01236 C00001  = C00345 , Reaction type 02035, deltaG =, -2.29495467 , kcal/mol
+C00345 C00006 C00001  = C00199 C00011 C00005 C00080 , Reaction type 01528, deltaG =, 50.05781557 , kcal/mol
+C00345 C00003 C00001  = C00199 C00011 C00004 C00080 , Reaction type 10221, deltaG =, 284.30375941 , kcal/mol
+C00199  = C00231 , Reaction type 01529, deltaG =, -.22092117 , kcal/mol
+C00117  = C00199 , Reaction type 01056, deltaG =, 18.27250761 , kcal/mol
+C05382 C00118  = C00117 C00231 , Reaction type 01641, deltaG =, -31.62868145 , kcal/mol
+C05382 C00118  = C00279 C00085 , Reaction type 08575, deltaG =, -32.42584506 , kcal/mol
+C00085 C00118  = C00279 C00231 , Reaction type 01067, deltaG =, 14.91708614 , kcal/mol
+C00668  = C00085 , Reaction type 13199, deltaG =, -4.54951652 , kcal/mol
+C00668  = C01172 , Reaction type 02739, deltaG =, 2.67239566 , kcal/mol

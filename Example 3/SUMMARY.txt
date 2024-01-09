@@ -1,0 +1,25 @@
+Starting time: 2023-12-06 17:31:30.212897
+Type of job: KEGG download module M00008
+KEGG names of module(s) explored: 
+Entner-Doudoroff pathway, glucose-6P => glyceraldehyde-3P + pyruvate
+
+    Warning messages:
+H+ was converted automatically to H3O+
+water was added to reaction R02736 to allow the formation of H3O+
+
+
+TOTAL NUMBER OF COMPOUNDS: 10 involved in 4 REACTIONS
+ calculated in 17.03 seconds
+
+Starting time: 2023-12-06 17:32:55.155915
+Type of job: rdkit calculation
+Reactions considered in this calculation (SMARTS format):
+0) [C:1]=[O:2].[C:3][C:4](=[O:5])>>[O:5]=[C:4][C:3][C:1][O:2]
+1) [CH:1](=[O:2]).[CH:3](=[O:4])>>[C:1][O:2].[C:3](=[O:4])[O]
+Reaction 1 DISABLED
+
+Number of cycles calculated: 1
+
+TOTAL NUMBER OF COMPOUNDS: 37 involved in 31 REACTIONS
+ calculated in 5.99 seconds
+
