@@ -26,7 +26,7 @@
 
  IMPORTANT:
  The starting conditions (reactants and reactions) are defined in the files starting_reactants.txt and starting_reactions.txt.
- Anyway, a basic editor is present in the program for inserting/enabling and disabling both reagents 
+ Anyway, a basic editor is present in the program for inserting, enabling and disabling both reagents 
  and reactions.
 
  The program creates some supplementary files:
