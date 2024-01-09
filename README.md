@@ -30,13 +30,13 @@
  and reactions.
 
  The program creates some supplementary files:<br>
- <b>COMPOUNDS.csv</b>: A list of the compound number, its molecular formula and MW. Energy at the rdkit level is also added if the optimization flag is enabled<br>
- FREQUENCY.csv: A frequency distribution of molecular weights (aka: number of compounds having the same<br>
+ <b><i>COMPOUNDS.csv</i></b>: A list of the compound number, its molecular formula and MW. Energy at the rdkit level is also added if the optimization flag is enabled<br>
+ <b><i>FREQUENCY.csv</i></b>: A frequency distribution of molecular weights (aka: number of compounds having the same<br>
      molecular weight)<br>
- REACTIONS.txt: A list of all reactions calculated or downloaded from KEGG (useful for the determination of reactions 
+ <b><i>REACTIONS.txt</i></b>: A list of all reactions calculated or downloaded from KEGG (useful for the determination of reactions 
      free energies)<br>
- SUMMARY.txt: A file containing summary informations for the calculations made. This is an important log
+ <b><i>SUMMARY.txt</i></b>: A file containing summary informations for the calculations made. This is an important log
  file.<br>
- reactions.html: A html file containing the visual representation of reactions considered and calculated.<br>
- smarts_reactions.txt: A text file containing all the reactions inserted by user in SMARTS format together with 
+ <b><i>reactions.html</i></b>: A html file containing the visual representation of reactions considered and calculated.<br>
+ <b><i>smarts_reactions.txt</i></b>: A text file containing all the reactions inserted by user in SMARTS format together with 
      auxiliary reagents and products
