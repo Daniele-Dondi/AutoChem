@@ -40,3 +40,17 @@
  <b><i>reactions.html</i></b>: A html file containing the visual representation of reactions considered and calculated.<br>
  <b><i>smarts_reactions.txt</i></b>: A text file containing all the reactions inserted by user in SMARTS format together with 
      auxiliary reagents and products
+
+#Installation
+<b>Autochem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installing)
+Copy the whole directory in your PC.
+Launch Autochem.py from your favourite IDE (we suggest Spyder)
+<b>Check</b>: copy the whole content of the folder scripts in your Linux working environment for DFT calculations.
+chmod +x chmodme
+launch ./chmodme
+Put in the same folder the inputs to be calculated
+launch check:
+./check
+follow instructions
+after some time launch check again and again up to the calculations of all inputs.
+(if you are expert, you can add launch to chron or to some automatic running of check)
