@@ -49,7 +49,7 @@
 # Installation
 <br>
 <b>AutoChem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installing)<br>
-Copy the whole directory in your PC.<br>
+Copy the whole directory of AutoChem in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
 <br>
 <b>check</b>: Copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
