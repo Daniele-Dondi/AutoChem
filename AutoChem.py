@@ -19,7 +19,7 @@
 # KEGG mode: AutoChem downloads modules or pathways from KEGG database
 # There is also the possibility to read data created by previous jobs and continue from that point. 
 # This allows the creation of mixed jobs.
-# Moreover, input files for ORCA or Gaussian can be produced for further calculations of free energies.
+# Moreover, input files for ORCA and/or Gaussian can be produced for further calculations of free energies.
 # 
 # AutoChem possesses a second module called check, an intelligent script to launch, control and
 # retrieve data from Gaussian and ORCA calculations.
@@ -29,7 +29,7 @@
 # Moreover, scripts permits to calculate the reactions deltaG and to prepare a chemical network for 
 # subsequent analysis.
 # The second module check is not dependent from AutoChem and it is able to manage multiple input files 
-# created by other methods.
+# created by other methods too.
 # Refer to README.txt in scripts folder to have furher information about this module.
 #
 # IMPORTANT:
