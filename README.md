@@ -52,7 +52,7 @@
 Copy the whole directory in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
 <br>
-<b>check</b>: copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
+<b>check</b>: Copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
 chmod +x chmodme<br>
 launch ./chmodme<br>
 Put in the same folder the inputs to be calculated<br>
