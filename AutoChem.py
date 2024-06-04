@@ -15,7 +15,7 @@
 #
 # This program can operate in two different modes:
 # SMARTS mode: AutoChem generates all the products coming from the combination of a starting pool of compounds 
-# and a set of reactions.
+# and a set of reactions. (See the section IMPORTANT below)
 # KEGG mode: AutoChem downloads modules or pathways from KEGG database
 # There is also the possibility to read data created by previous jobs and continue from that point. 
 # This allows the creation of mixed jobs.
