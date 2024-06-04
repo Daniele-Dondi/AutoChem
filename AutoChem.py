@@ -13,23 +13,31 @@
 #
 #                              Chemical Reaction Network Calculator
 #
-# This program generates all the products coming from the combination of a starting pool of compounds 
+# This program can operate in two different modes:
+# SMARTS mode: AutoChem generates all the products coming from the combination of a starting pool of compounds 
 # and a set of reactions.
-# The program can also download modules and pathways from KEGG database
+# KEGG mode: AutoChem downloads modules or pathways from KEGG database
+# There is also the possibility to read data created by previous jobs and continue from that point. 
+# This allows the creation of mixed jobs.
 # Moreover, input files for ORCA or Gaussian can be produced for further calculations of free energies.
+# 
+# AutoChem possesses a second module called check, an intelligent script to launch, control and
+# retrieve data from Gaussian and ORCA calculations.
 # For this aim, bash scripts present in the scripts directory help the automation process 
 # for the submission of jobs, their checking and automatic restarting in order to have optimized 
 # structures with no imaginary frequencies. 
 # Moreover, scripts permits to calculate the reactions deltaG and to prepare a chemical network for 
 # subsequent analysis.
-# In addition, calculations can be saved and integrated, giving the possibility to mix calculations 
-# on KEGG downloaded reactions and generated reactions or to make subsequent calculations with different
-# reactions and/or reactants.
+# The second module check is not dependent from AutoChem and it is able to manage multiple input files 
+# created by other methods.
+# Refer to README.txt in scripts folder to have furher information about this module.
 #
 # IMPORTANT:
-# The starting conditions (reactants and reactions) are defined in the function Set_Initial_Conditions. 
-# Anyway, a basic editor is present in the program for inserting/enabling and disabling both reagents 
+# The starting conditions (reactants and reactions) for the calculations of SMARTS reactions are read
+# from files starting_reactants.txt and smarts_reactions.txt
+# A basic editor is present in the program for inserting/enabling and disabling both reagents 
 # and reactions.
+# We suggest to edit directly these files for customisation.
 #
 # The program creates some supplementary files:
 # COMPOUNDS.csv: A list of the compound number, its molecular formula and MW. 
@@ -41,6 +49,9 @@
 # SUMMARY.txt: A file containing summary informations for the calculations made. This is an important log
 # file.
 # reactions.html: A html file containing the visual representation of reactions considered and calculated.
+#
+# The program reads some files (in the case of SMARTS reactions):
+# starting_ractants.txt: A text file containing all the starting reactants in SMILES format
 # smarts_reactions.txt: A text file containing all the reactions inserted by user in SMARTS format together with 
 #     auxiliary reagents and products
 
