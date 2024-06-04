@@ -41,7 +41,7 @@
 #
 # The program creates some supplementary files:
 # COMPOUNDS.csv: A list of the compound number, its molecular formula and MW. 
-#     Energy at the rdkit level is also added if the optimization flag is enabled
+#     Energy at the RDKit level is also added if the optimization flag is enabled
 # FREQUENCY.csv: A frequency distribution of molecular weights (aka: number of compounds having the same
 #     molecular weight)
 # REACTIONS.txt: A list of all reactions calculated or downloaded from KEGG (useful for the determination of reactions 
