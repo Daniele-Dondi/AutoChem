@@ -30,7 +30,7 @@
  and reactions.
 
  The program creates some supplementary files:<br>
- <b><i>COMPOUNDS.csv</i></b>: A list of the compound number, its molecular formula and MW. Energy at the rdkit level is also added if the optimization flag is enabled<br>
+ <b><i>COMPOUNDS.csv</i></b>: A list of the compound number, its molecular formula and MW. Energy at the RDKit level is also added if the optimization flag is enabled<br>
  <b><i>FREQUENCY.csv</i></b>: A frequency distribution of molecular weights (aka: number of compounds having the same<br>
      molecular weight)<br>
  <b><i>REACTIONS.txt</i></b>: A list of all reactions calculated or downloaded from KEGG (useful for the determination of reactions 
@@ -42,7 +42,7 @@
      auxiliary reagents and products
 <br> 
  ## Note
- AutoChem is divided mainly in two programs:<br>
+ AutoChem is divided in two programs:<br>
  <b>AutoChem</b>, written in Python, is managing the reaction generation<br>
  <b>check</b>, written in BASH, is managing the job submission with the automatic calculation of free energies<br>
 <br>
