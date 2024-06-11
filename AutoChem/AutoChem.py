@@ -85,7 +85,7 @@ aux_reagents=[] #database containing the number of auxiliary reagents for each r
 aux_products=[] #database containing the number of auxiliary products for each reaction
 num_aux=0 #total number of auxiliary compounds
 computed_reactions=[] #database of rdkit generated reactions (for an eventual calculation of free energy)
-path="" #path for the current dataset (projectname)
+path=os.getcwd() #path for the current dataset (projectname)
 opt_mol=True #if true make the MM optimization of the molecules saving them as .mol
 gau_pre="%nprocshared=4"
 gau_job="# opt freq b3lyp 6-31G(d)" #default gaussian job
