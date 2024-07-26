@@ -7,6 +7,7 @@ if [ -a TSP ];   then
   tsp -C
 fi
 if [ -a SLURM ];   then
-  squeue -u ddondi00
+  ./slurm_settings
+  squeue -u $user
 fi
 

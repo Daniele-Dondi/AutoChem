@@ -29,7 +29,7 @@ if [ -a SLURM ];   then
   pwd=$(pwd)
   cp slurm_header $file.tmp
   echo '. $g16root/g16/bsd/g16.profile       # for bash script
-  export GAUSS_SCRDIR=$CINECA_SCRATCH/g16_$SLURM_JOBID  # def. tmp folder in $CINECA_SCRATCH
+  export GAUSS_SCRDIR=$scratchdir/g16_$SLURM_JOBID  # def. tmp folder
   mkdir  -p $GAUSS_SCRDIR                      # the dir must exist' >> $file.tmp
   echo "
   g16 -p=$proc < $file.gjf  > $file.out
@@ -49,7 +49,7 @@ if [ -a SLURM ];   then
   pwd=$(pwd)
   cp slurm_header $file.tmp
   echo ". $g16root/g16/bsd/g16.profile       # for bash script
-   export GAUSS_SCRDIR=$CINECA_SCRATCH/g16_$SLURM_JOBID  # def. tmp folder in $CINECA_SCRATCH
+  export GAUSS_SCRDIR=$scratchdir/g16_$SLURM_JOBID  # def. tmp folder
    mkdir  -p $GAUSS_SCRDIR                      # the dir must exist" >> $file.tmp
   echo "
     g16 -p=$proc < $file.gjf  > $file.out

@@ -6,8 +6,5 @@ echo "Calculations are still running"
 rm *.que
 exit
 fi
-#rm *.gjf
-#rm *.err
 rm *.7 2>/dev/null
-rm -r $CINECA_SCRATCH/g16* 2>/dev/null
-for f in /tmp/*; do rm $f 2>/dev/null; done
+for f in /tmp/*; do rm -r $f 2>/dev/null; done
