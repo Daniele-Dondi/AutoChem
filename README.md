@@ -48,16 +48,22 @@
 <br>
 # Installation
 <br>
-<b>AutoChem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installing)<br>
+<b>AutoChem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installation)<br>
 Copy the whole directory of AutoChem in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
 <br>
-<b>check</b>: Copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
+<b>check</b>: 
+You should have awk, bc available on your Linux environment together with a task spooler like:<br>
+tsp or slurm<br>
+If you use Windows for Autochem you should install also dos2unix<br>
+To activate <i>check</i> for the first time you should do:<br>
+Copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
+Render the scripts runnable:<br>
 chmod +x chmodme<br>
 launch ./chmodme<br>
-Put in the same folder the inputs to be calculated<br>
-launch check:<br>
+After doing this, you can put in the same folder the inputs to be calculated.<br>
+Then launch check:<br>
 ./check<br>
-follow instructions<br>
+and follow instructions<br>
 after some time launch check again and again up to the calculations of all inputs.<br>
 (if you are expert, you can add launch to chron or to some automatic running of check)<br>
