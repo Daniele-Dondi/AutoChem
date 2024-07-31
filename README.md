@@ -57,7 +57,7 @@ You should have awk, bc available on your Linux environment together with a task
 tsp or slurm<br>
 If you use Windows for Autochem you should install also dos2unix<br>
 To activate <i>check</i> for the first time you should do:<br>
-1) Copy the whole content of the folder scripts in your Linux working environment for DFT calculations.<br>
+1) Copy the whole content of the folder <i>scripts</i> in your Linux working environment for calculations.<br>
 2) Render the scripts runnable:<br>
 chmod +x chmodme<br>
 and then launch <i>chmodme</i><br>
