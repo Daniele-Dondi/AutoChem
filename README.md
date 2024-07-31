@@ -69,3 +69,5 @@ Then launch check:<br>
 and follow instructions<br>
 after some time launch check again and again up to the calculations of all inputs.<br>
 (if you are expert, you can add launch to chron or to some automatic running of check)<br>
+<br>Watch the video:<br>
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/check.mp4
