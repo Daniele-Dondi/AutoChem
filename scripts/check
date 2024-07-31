@@ -24,7 +24,7 @@ elif [ -a XTB ];   then
   exit
  fi
 elif [ -a CREST ];   then
- ext=".inp"
+ ext=".xyz"
  if ! [ -a crestheader ]; then
   echo "crestheader not found. Please create a text file with that name containing the correct job for CREST"
   echo "example:"
