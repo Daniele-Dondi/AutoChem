@@ -143,7 +143,7 @@ if [ -s err.txt ] ; then
  rm *.err 2>/dev/null
 fi
 
-tail -n +2 queue.que > q2.que
+tail -n +1 queue.que > q2.que
 if [ ! -s q2.que ] ; then     #run queue is empty
  numout=$(ls *.out 2>/dev/null | wc -l)
   if [ $numout -eq 0 ]; then    #no output files found
