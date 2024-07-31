@@ -32,7 +32,7 @@ elif [ -a CREST ];   then
   exit
  fi
 else
- echo "Calculation program not indicated. Possible choices are ORCA or Gaussian"
+ echo "Calculation program not indicated."
  read -p "Press O for ORCA, G for Gaussian, C for CREST, X for XTB. Any other keys to exit " -n 1 -r
  echo
   if [[ $REPLY =~ ^[Oo]$ ]]
