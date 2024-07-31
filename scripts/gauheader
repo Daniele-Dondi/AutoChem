@@ -1,6 +1,6 @@
 %nprocshared=4
 # opt freq b3lyp 6-31G(d)
 
-CheReNetw rerun
+AutoChem rerun
 
 0 1
