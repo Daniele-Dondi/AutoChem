@@ -15,9 +15,25 @@ elif [ -a ORCA ];   then
   printf "! XTB2 opt numfreq\n* xyz 0 1\n"
   exit
  fi
+elif [ -a XTB ];   then
+ ext=".xyz"
+ if ! [ -a xtbheader ]; then
+  echo "xtbheader not found. Please create a text file with that name containing the correct job for XTB"
+  echo "example:"
+  printf "--opt --gfn2\n"
+  exit
+ fi
+elif [ -a CREST ];   then
+ ext=".inp"
+ if ! [ -a crestheader ]; then
+  echo "crestheader not found. Please create a text file with that name containing the correct job for CREST"
+  echo "example:"
+  printf "--gfn2 --gbsa h2o -T 4\n"
+  exit
+ fi
 else
  echo "Calculation program not indicated. Possible choices are ORCA or Gaussian"
- read -p "Press O for ORCA. Press G for Gaussian. Any other keys to exit " -n 1 -r
+ read -p "Press O for ORCA, G for Gaussian, C for CREST, X for XTB. Any other keys to exit " -n 1 -r
  echo
   if [[ $REPLY =~ ^[Oo]$ ]]
    then
@@ -29,6 +45,18 @@ else
     then
     touch GAUSSIAN
     echo "Default program: Gaussian"
+    echo launch $0 again to restart the missing calculations
+    exit
+  elif [[ $REPLY =~ ^[Cc]$ ]]
+    then
+    touch CREST
+    echo "Default program: CREST"
+    echo launch $0 again to restart the missing calculations
+    exit
+  elif [[ $REPLY =~ ^[Xx]$ ]]
+    then
+    touch XTB
+    echo "Default program: XTB"
     echo launch $0 again to restart the missing calculations
     exit
   else
