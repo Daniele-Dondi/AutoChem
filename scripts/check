@@ -4,7 +4,7 @@ if [ -a GAUSSIAN ];   then
  if ! [ -a gauheader ]; then
   echo "gauheader not found. Please create a text file with that name containing the correct job for Gaussian"
   echo "example:"
-  printf "%nprocshared=4\n# opt freq b3lyp 6-31G(d)\n\nCheReNetw rerun\n\n0 1\n"
+  echo -e "%nprocshared=4\n# opt freq b3lyp 6-31G(d)\n\nCheReNetw rerun\n\n0 1\n"
   exit
  fi
 elif [ -a ORCA ];   then
@@ -12,7 +12,7 @@ elif [ -a ORCA ];   then
  if ! [ -a orcaheader ]; then
   echo "orcaheader not found. Please create a text file with that name containing the correct job for ORCA"
   echo "example:"
-  printf "! XTB2 opt numfreq\n* xyz 0 1\n"
+  echo -e "! XTB2 opt numfreq\n* xyz 0 1\n"
   exit
  fi
 elif [ -a XTB ];   then
@@ -20,7 +20,7 @@ elif [ -a XTB ];   then
  if ! [ -a xtbheader ]; then
   echo "xtbheader not found. Please create a text file with that name containing the correct job for XTB"
   echo "example:"
-  printf "--opt --gfn2\n"
+  echo -e "--opt --gfn2\n"
   exit
  fi
 elif [ -a CREST ];   then
@@ -28,7 +28,7 @@ elif [ -a CREST ];   then
  if ! [ -a crestheader ]; then
   echo "crestheader not found. Please create a text file with that name containing the correct job for CREST"
   echo "example:"
-  printf "--gfn2 --gbsa h2o -T 4\n"
+  echo -e "--gfn2 --gbsa h2o -T 4\n"
   exit
  fi
 else
