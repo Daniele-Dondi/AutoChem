@@ -20,10 +20,10 @@ if [ -a TSP ];   then     #User had chosen tsp task spooler
  fi
  if [ -a CREST ];   then
   #echo "tsp + crest";
+  crest_commands=$(crestheader)
   tempdir=$(mktemp -d)
   cp $1 $tempdir
-  #( cd $tempdir && tsp crest $tempdir/$1 --gfn2 --gbsa h2o -T 4)
-  ( cd $tempdir && tsp crest $tempdir/$1 -T 4)
+  ( cd $tempdir && tsp crest $tempdir/$1 $crest_commands )
  fi
 fi
 
