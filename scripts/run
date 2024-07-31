@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ "$#" -ne 1 ]; then
-    echo "use: $0 file.gjf"
+    echo "use: $0 input_file"
 exit
 fi
 
