@@ -39,25 +39,25 @@ else
    then
     touch ORCA
     echo "Default program: ORCA"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   elif [[ $REPLY =~ ^[Gg]$ ]]
     then
     touch GAUSSIAN
     echo "Default program: Gaussian"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   elif [[ $REPLY =~ ^[Cc]$ ]]
     then
     touch CREST
     echo "Default program: CREST"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   elif [[ $REPLY =~ ^[Xx]$ ]]
     then
     touch XTB
     echo "Default program: XTB"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   else
     exit
@@ -72,13 +72,13 @@ if ! [ -a TSP ] && ! [ -a SLURM ]; then
    then
     touch TSP
     echo "Default task spooler: tsp"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   elif [[ $REPLY =~ ^[Ss]$ ]]
     then
     touch SLURM
     echo "Default task spooler: slurm"
-    echo launch $0 again to restart the missing calculations
+    echo launch $0 again
     exit
   else
     exit
