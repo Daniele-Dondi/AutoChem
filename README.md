@@ -51,8 +51,6 @@
 <b>AutoChem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installation)<br>
 Copy the whole directory of AutoChem in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
-<br>Watch the video: (AutoChem program with SMARTS reactions)<br>
-https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/AutoChem_example.mp4
 <br>
 <br>
 <b>check</b>: 
@@ -72,9 +70,32 @@ Then launch check:<br>
 and follow instructions<br>
 after some time launch check again and again up to the calculations of all inputs.<br>
 (if you are expert, you can add launch to chron or to some automatic running of check)<br>
+
+
+# QUICKSTART
+<br>Watch the video: (AutoChem program with SMARTS reactions)<br>
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/AutoChem_example.mp4
+
+
+https://github.com/user-attachments/assets/3b95d033-b533-40df-97f6-128ca5fede92
+
+
+<br>
 <br>Watch the video: (check program with crest)<br>
 https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/check.mp4
+
+
+https://github.com/user-attachments/assets/cb7bd15c-823a-44bd-8b3b-2234a6f599dc
+
+
 <br>
 <br>Watch the video: (check program with xtb and deltaG calculations)<br>
 https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/xtb_+_deltaG.mp4
+
+
+https://github.com/user-attachments/assets/003b1c4b-01f4-4b33-b956-cf628a6a7b8d
+
+
+<br>
+<br>
 <br>
