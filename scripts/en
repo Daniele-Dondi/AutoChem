@@ -7,30 +7,33 @@ if [ -a GAUSSIAN ];   then
  calculated=$(wc -l <energies.txt)
  shopt -u nullglob
  total=$(ls *.gjf 2>/dev/null | wc -l)
- echo
- echo $calculated" Compounds calculated out of "$total
- echo
-fi
-if [ -a ORCA ];   then
+elif [ -a ORCA ];   then
  for f in *.out; do  echo -n . > /dev/tty; a=$(grep "Final Gibbs free energy" $f | cut -d "-" -f 2 | cut -d " " -f 1);  b=$(./freq $f); echo $f Sum of electronic and thermal Free Energies= -$a $b; done > energies.tmp
  sort -n energies.tmp > energies.txt
  rm energies.tmp
  calculated=$(wc -l <energies.txt)
  shopt -u nullglob
  total=$(ls *.inp 2>/dev/null | wc -l)
- echo
- echo $calculated" Compounds calculated out of "$total
- echo
-fi
-if [ -a CREST ];   then
+elif [ -a CREST ];   then
  for f in *.out; do  echo -n . > /dev/tty; a=$(head $f -n 2 | tail -n 1 | cut -d "-" -f 2);  b=$(./freq $f); echo $f Sum of electronic and thermal Free Energies= -$a $b; done > energies.tmp
  sort -n energies.tmp > energies.txt
  rm energies.tmp
  calculated=$(wc -l <energies.txt)
  shopt -u nullglob
  total=$(ls *.xyz 2>/dev/null | wc -l)
- echo
- echo $calculated" Compounds calculated out of "$total
- echo
+elif [ -a XTB ];   then
+ for f in *.out; do  echo -n . > /dev/tty; a=$(head $f -n 2 | tail -n 1 | cut -d " " -f 3);  b=$(./freq $f); echo $f Sum of electronic and thermal Free Energies= $a $b; done > energies.tmp
+ sort -n energies.tmp > energies.txt
+ rm energies.tmp
+ calculated=$(wc -l <energies.txt)
+ shopt -u nullglob
+ total=$(ls *.xyz 2>/dev/null | wc -l)
+else
+ echo "ERROR: Program not supported or not properly indicated"
+ exit
 fi
+
+echo
+echo $calculated" Compounds calculated out of "$total
+echo
 
