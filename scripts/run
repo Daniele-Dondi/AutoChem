@@ -25,6 +25,13 @@ if [ -a TSP ];   then     #User had chosen tsp task spooler
   cp $1 $tempdir
   ( cd $tempdir && tsp crest $tempdir/$1 $crest_commands )
  fi
+ if [ -a XTB ];   then
+  #echo "tsp + xtb";
+  xtb_commands=$(<xtbheader)
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp xtb $tempdir/$1 $xtb_commands )
+ fi
 fi
 
 if [ -a SLURM ];   then    #User had chosen slurm task spooler
