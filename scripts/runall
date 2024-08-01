@@ -8,3 +8,6 @@ fi
 if [ -a CREST ];   then
  for i in *.xyz; do ./run $i; done
 fi
+if [ -a XTB ];   then
+ for i in *.xyz; do ./run $i; done
+fi
