@@ -78,6 +78,8 @@ if ! [ -a TSP ] && ! [ -a SLURM ]; then
     then
     touch SLURM
     echo "Default task spooler: slurm"
+    echo "IMPORTANT: Edit the file slurm_settings to setup personal configuration"
+    echo "Edit the file slurm_header according to your configuration"
     echo launch $0 again
     exit
   else
