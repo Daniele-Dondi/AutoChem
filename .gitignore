@@ -1,2 +1,3 @@
 test\*.*
 AutoChem\test\*.*
+/AutoChem/test

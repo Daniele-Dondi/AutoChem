@@ -369,8 +369,10 @@ def Conv_mol2input(type):
         fileext="gjf"
     elif type=="orca":
         fileext="inp"
+    elif type=="xyz":
+        fileext="xyz"        
     else:
-        print("Error Conv_mol2input: type must be gaussian or orca")
+        print("Error Conv_mol2input: type must be gaussian, orca or xyz")
     mol_list = glob.glob(path+os.sep+'*.mol')
     for file in mol_list:
         filein = open(file, 'r')
@@ -387,6 +389,8 @@ def Conv_mol2input(type):
          outfile.write(gau_pre+"\n"+gau_job+"\n \n"+"CheReNetw\n"+" \n"+str(Charge)+" 1\n")
         if type=="orca":
          outfile.write(orca_header[0]+"\n"+orca_header[1]+str(Charge)+" 1\n")
+        if type=="xyz":
+         outfile.write(str(numatoms)+"\nCreated by AutoChem\n")         
         for i in range(numatoms):
             tmp=Lines[4+i].split()
             outfile.write(tmp[3]+" "+tmp[0]+" "+tmp[1]+" "+tmp[2]+"\n")
@@ -394,6 +398,8 @@ def Conv_mol2input(type):
          outfile.write("\n\n")
         if type=="orca":
          outfile.write("*\n")
+        if type=="xyz":
+         outfile.write("\n")         
         outfile.close()
 
 def getURL(url):
@@ -702,9 +708,16 @@ if opt_mol:
      ask=str(input('Orca command: ('+orca_header[0]+'): '))
      if ask!="":
         orca_header[0]=ask    
+    ask_xyz=input('Do you want to create xyz (CREST, xTB) input file? [Y/n] ').upper()
+    if ask_xyz=='N':
+     xyz=False
+    else:
+     xyz=True
+        
 else:
     gau=False
     orca=False
+    xyz=False
     
 if (warm_start==False): 
     compounds_file.write("name,formula,smiles,MW")
@@ -867,6 +880,8 @@ if gau:
     Conv_mol2input("gaussian")
 if orca: 
     Conv_mol2input("orca")  
+if xyz: 
+    Conv_mol2input("xyz")      
 end = time.time()
 time_string='\nTOTAL NUMBER OF COMPOUNDS: '+str(len(pool))+' involved in '+str(len(computed_reactions))+' REACTIONS\n calculated in '+str(round(end-start,2))+' seconds\n\n'
 print(time_string)
