@@ -15,12 +15,12 @@
  and a set of reactions.<br>
   The program can also download modules and pathways from KEGG database.<br>
  Moreover, input files for ORCA, Gaussian, CREST and xTB can be produced for further calculations of free energies.
- For this aim, bash scripts present in the scripts directory help the automation process 
+ For this aim, bash scripts present in the <i>scripts</i> directory help the automation process 
  for the submission of jobs, their checking and automatic restarting in order to have optimized 
  structures with no imaginary frequencies. <br>
- Moreover, scripts permits to calculate the reactions deltaG and to prepare a chemical network for 
+ Scripts permits to calculate the reactions deltaG and to prepare a chemical network for 
  subsequent analysis.<br>
- In addition, calculations can be saved and integrated, giving the possibility to mix calculations 
+ In addition, calculations can be saved and iterated, giving the possibility to mix calculations 
  on KEGG downloaded reactions and generated reactions or to make subsequent calculations with different
  reactions and/or reactants.<br>
  <br>
