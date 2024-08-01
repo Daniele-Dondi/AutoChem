@@ -52,7 +52,7 @@
 Copy the whole directory of AutoChem in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
 <br>Watch the video: (AutoChem program with SMARTS reactions)<br>
-https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/AutoChem example.mp4
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/AutoChem_example.mp4
 <br>
 <br>
 <b>check</b>: 
@@ -76,4 +76,5 @@ after some time launch check again and again up to the calculations of all input
 https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/check.mp4
 <br>
 <br>Watch the video: (check program with xtb and deltaG calculations)<br>
-https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/xtb + deltaG.mp4
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/xtb_+_deltaG.mp4
+<br>
