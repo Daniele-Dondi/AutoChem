@@ -51,6 +51,9 @@
 <b>AutoChem</b>: Download and install RdKit library in the proper Conda environment (follow instructions on RdKit website/anaconda installation)<br>
 Copy the whole directory of AutoChem in your PC.<br>
 Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
+<br>Watch the video: (AutoChem program with SMARTS reactions)<br>
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/AutoChem example.mp4
+<br>
 <br>
 <b>check</b>: 
 You should have awk, bc available on your Linux environment together with a task spooler like:<br>
@@ -69,5 +72,8 @@ Then launch check:<br>
 and follow instructions<br>
 after some time launch check again and again up to the calculations of all inputs.<br>
 (if you are expert, you can add launch to chron or to some automatic running of check)<br>
-<br>Watch the video:<br>
+<br>Watch the video: (check program with crest)<br>
 https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/check.mp4
+<br>
+<br>Watch the video: (check program with xtb and deltaG calculations)<br>
+https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/xtb + deltaG.mp4
