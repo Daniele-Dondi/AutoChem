@@ -14,7 +14,7 @@
  This program generates all the products coming from the combination of a starting pool of compounds 
  and a set of reactions.<br>
   The program can also download modules and pathways from KEGG database.<br>
- Moreover, input files for ORCA and Gaussian can be produced for further calculations of free energies.
+ Moreover, input files for ORCA, Gaussian, CREST and xTB can be produced for further calculations of free energies.
  For this aim, bash scripts present in the scripts directory help the automation process 
  for the submission of jobs, their checking and automatic restarting in order to have optimized 
  structures with no imaginary frequencies. <br>
