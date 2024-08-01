@@ -22,7 +22,7 @@
 # Moreover, input files for ORCA and/or Gaussian can be produced for further calculations of free energies.
 # 
 # AutoChem possesses a second module called check, an intelligent script to launch, control and
-# retrieve data from Gaussian and ORCA calculations.
+# retrieve data from Gaussian and ORCA calculations (now extended to XTB and CREST).
 # For this aim, bash scripts present in the scripts directory help the automation process 
 # for the submission of jobs, their checking and automatic restarting in order to have optimized 
 # structures with no imaginary frequencies. 
