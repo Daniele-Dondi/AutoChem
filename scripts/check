@@ -123,24 +123,29 @@ if [ -s err.txt ] ; then
  echo "Number of calculations to restart:"
  wc -l err.txt | cut -d " " -f 1
  echo ""
- while read line
-  do name=$(echo $line | cut -f 1 -d ".")
-  i=1
-  while [ -f $name$ext"-old"$i ] #try to find the first available number
-   do
-    ((i++))
-  done
-  mv $name$ext $name$ext"-old"$i
-  ./ex $name".out"
-  if ! [ $? -eq 0 ]; then
-   echo OPS! Something went wrong
-   echo tried to restart $name for error in calculation but something went wrong>> restarted.txt
-   exit
-  fi
-  mv $name".out" $name".old"$i
-  ./run $name$ext
-  echo restarted $name for error in calculation >> restarted.txt
- done < err.txt
+ read -p "Restart wrong calculations? [y/n] " -n 1 -r
+ echo
+ if [[ $REPLY =~ ^[Yy]$ ]]
+  then
+   while read line
+    do name=$(echo $line | cut -f 1 -d ".")
+    i=1
+    while [ -f $name$ext"-old"$i ] #try to find the first available number
+     do
+      ((i++))
+    done
+    mv $name$ext $name$ext"-old"$i
+    ./ex $name".out"
+    if ! [ $? -eq 0 ]; then
+     echo OPS! Something went wrong
+     echo tried to restart $name for error in calculation but something went wrong>> restarted.txt
+     exit
+    fi
+    mv $name".out" $name".old"$i
+    ./run $name$ext
+    echo restarted $name for error in calculation >> restarted.txt
+   done < err.txt
+ fi
  errors=1
  rm *.err 2>/dev/null
 fi
