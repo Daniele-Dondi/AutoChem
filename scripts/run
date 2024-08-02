@@ -16,7 +16,7 @@ if [ -a TSP ];   then     #User had chosen tsp task spooler
  if [ -a GAUSSIAN ];   then
   #echo "tsp + gaussian";
   cp $1 /tmp/$1
-  tsp g16 /tmp/$1
+  tsp g09 /tmp/$1
  fi
  if [ -a CREST ];   then
   #echo "tsp + crest";

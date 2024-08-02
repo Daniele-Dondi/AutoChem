@@ -243,3 +243,5 @@ rm *.7 2>/dev/null
 rm *.que 2>/dev/null
 rm *.tmp 2>/dev/null
 rm err.txt 2>/dev/null
+rm list.txt 2>/dev/null
+rm que.txt 2>/dev/null
