@@ -10,13 +10,15 @@ dos2unix $1 2>/dev/null
 if [ -a TSP ];   then     #User had chosen tsp task spooler
  if [ -a ORCA ];   then 
   #echo "tsp + orca"; 
-  cp $1 /tmp/$1
-  tsp orca /tmp/$1 >/dev/null
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp orca $tempdir/$1 )
  fi
  if [ -a GAUSSIAN ];   then
   #echo "tsp + gaussian";
-  cp $1 /tmp/$1
-  tsp g09 /tmp/$1
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp g09 $tempdir/$1 )
  fi
  if [ -a CREST ];   then
   #echo "tsp + crest";
