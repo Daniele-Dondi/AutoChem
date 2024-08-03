@@ -98,19 +98,25 @@ if [ -s negfreq.tmp ] ; then
  echo ""
  echo "Number of calculations to restart:"
  cat negfreq.tmp | wc -l
-  while read line
-   do name=$(echo $line | cut -f 1 -d ".")
-   i=1
-   while [ -f $name$ext"-old"$i ] #try to find the first available number
-    do
-     ((i++))
-   done
-   mv $name$ext $name$ext"-old"$i #save the old input file
-   ./combine $name".out"
-   mv $name".out" $name".old"$i #save the old output file
-   ./run $name$ext
-   echo restarted $name for a negative frequency >> restarted.txt
-  done < negfreq.tmp
+  echo ""
+  read -p "Restart wrong calculations? [y/n] " -n 1 -r
+  echo
+   if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+     while read line
+      do name=$(echo $line | cut -f 1 -d ".")
+      i=1
+      while [ -f $name$ext"-old"$i ] #try to find the first available number
+       do
+        ((i++))
+      done
+      mv $name$ext $name$ext"-old"$i #save the old input file
+      ./combine $name".out"
+      mv $name".out" $name".old"$i #save the old output file
+      ./run $name$ext
+      echo restarted $name for a negative frequency >> restarted.txt
+     done < negfreq.tmp
+   fi  
  errors=1
 fi
 rm err.txt 2>/dev/null

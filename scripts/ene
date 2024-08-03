@@ -1,0 +1,3 @@
+for f in *.out; do a=$(grep 'B3LYP)' $f | cut -d ' ' -f 8); echo $f Sum of electronic and thermal Free Energies= $a; done > energies.tmp
+sort -n energies.tmp > energies.txt
+rm energies.tmp 2>/dev/null
