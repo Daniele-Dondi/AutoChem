@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "use: $0 file.xyz"
+exit
+fi
+outfile=$(basename $1 .xyz )
+cat orcaheader > $outfile.inp
+tail -n +3 $1 >> $outfile.inp
+echo "*" >>$outfile.inp
+echo >>$outfile.inp
+
