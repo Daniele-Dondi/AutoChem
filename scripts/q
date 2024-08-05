@@ -11,6 +11,9 @@ if [ -a TSP ];   then
   elif [ -a GAUSSIAN ]; then
    awk '{name=$7; if($2=="finished" && $4=="0"){system("a=$(dirname "name") && b=$(basename "name") && echo $a $b");} if($2=="finished" && $4!="0"){system("b=$(basename "name") && cp "$3" $b.err")}}' que.txt > list.txt
    awk '{fname=substr($2, 1, length($2)-4); system("cp "$1"/"fname".log "fname".out"); }' list.txt
+  elif [ -a ORCA ]; then
+   awk '{name=$7; if($2=="finished" && $4=="0"){system("b=$(basename "name") && echo "$3" $b");} if($2=="finished" && $4!="0"){system("b=$(basename "name") && cp "$3" $b.err")}}' que.txt > list.txt
+   awk '{fname=substr($2, 1, length($2)-4); system("cp "$1" "fname".out"); }' list.txt
   else 
   awk '{name=substr($NF,6,index($NF,".")-6); if($2=="finished"){system("cp "$3" "name".out"); if($4!="0"){system("echo 'ERROR'>"name".err")}}}' que.txt 2>/dev/null
   fi  
