@@ -15,18 +15,18 @@
 #
 # This program can operate in two different modes:
 # SMARTS mode: AutoChem generates all the products coming from the combination of a starting pool of compounds 
-# and a set of reactions. (See the section IMPORTANT below)
+# and a set of reactions acting as a virtual chemical reactor. (See the section IMPORTANT below)
 # KEGG mode: AutoChem downloads modules or pathways from KEGG database
 # There is also the possibility to read data created by previous jobs and continue from that point. 
 # This allows the creation of mixed jobs.
-# Moreover, input files for ORCA and/or Gaussian can be produced for further calculations of free energies.
+# Moreover, input files for ORCA, Gaussian, CREST and xTB can be produced for further calculations of free energies.
 # 
 # AutoChem possesses a second module called check, an intelligent script to launch, control and
 # retrieve data from Gaussian and ORCA calculations (now extended to XTB and CREST).
 # For this aim, bash scripts present in the scripts directory help the automation process 
 # for the submission of jobs, their checking and automatic restarting in order to have optimized 
 # structures with no imaginary frequencies. 
-# Moreover, scripts permits to calculate the reactions deltaG and to prepare a chemical network for 
+# Moreover, scripts permit to calculate the reactions deltaG and to prepare a chemical network for 
 # subsequent analysis.
 # The second module check is not dependent from AutoChem and it is able to manage multiple input files 
 # created by other methods too.
