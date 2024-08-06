@@ -54,10 +54,9 @@ Launch Autochem.py from your favourite IDE (we suggest Spyder)<br>
 <br>
 <br>
 <b>check</b>: 
-You should have awk, bc available on your Linux environment together with a task spooler like:<br>
-tsp or slurm<br>
-If you use Windows for Autochem you should install also dos2unix<br>
-To activate <i>check</i> for the first time you should do:<br>
+You should have awk, bc available on your Linux environment together with a task spooler like tsp or slurm<br>
+If you use Windows for Autochem you should also install dos2unix<br>
+To activate <i>check</i> for the first time you should:<br>
 1) Copy the whole content of the folder <i>scripts</i> in your Linux working environment for calculations.<br>
 2) Render the scripts runnable:<br>
 chmod +x chmodme<br>
@@ -67,8 +66,9 @@ and then launch <i>chmodme</i><br>
 After doing this, you can put in the same folder the inputs to be calculated.<br>
 Then launch check:<br>
 ./check<br>
-and follow instructions<br>
-after some time launch check again and again up to the calculations of all inputs.<br>
+and follow instructions.<br>
+After some time launch check again and again up to the calculations of all inputs.<br>
+<i>Check</i> will take care the resubmission of jobs in the case of negative frequencies.<br>
 (if you are expert, you can add launch to chron or to some automatic running of check)<br>
 
 
