@@ -7,8 +7,6 @@
 #SBATCH --account= $user
 #SBATCH --mail-user= # if you want to receive an email, and if it is supported by the system insert your email
 #SBATCH --mail-type=END,FAIL # You will receive an email when the job is finished or failed
-#SBATCH --partition=    # INSERT THE NAME OF THE QUEUE
-module load autoload
-module load profile/chem-phys
+#SBATCH --partition= $queuename  
 module load g16/C.01
 
