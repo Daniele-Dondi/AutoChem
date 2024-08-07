@@ -1,0 +1,25 @@
+grep 'Job' *.out | tr -s " " | cut -d " " -f 5 > days.tim
+while IFS= read -r line; do echo -n $line "+"; done < days.tim > days.sum
+truncate -s-1 days.sum
+grep 'Job' *.out | tr -s " " | cut -d " " -f 7 > hours.tim
+while IFS= read -r line; do echo -n $line "+"; done < hours.tim > hours.sum
+truncate -s-1 hours.sum
+grep 'Job' *.out | tr -s " " | cut -d " " -f 9 > min.tim
+while IFS= read -r line; do echo -n $line "+"; done < min.tim > min.sum
+truncate -s-1 min.sum
+echo -n 'echo "(' > calc
+cat min.sum >> calc
+echo -n '+(' >> calc
+cat hours.sum >> calc
+echo -n ')*60' >> calc
+echo -n '+(' >> calc
+cat days.sum >> calc
+echo -n ')*60*24' >> calc
+echo ')/60" | bc -l' >> calc
+chmod +x calc
+./calc
+echo hours
+rm *.tim 2>/dev/null
+rm *.sum 2>/dev/null
+rm calc 2>/dev/null
+
