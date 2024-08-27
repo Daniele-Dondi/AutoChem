@@ -26,7 +26,7 @@
  AutoChem was published on the SoftwareX Journal https://doi.org/10.1016/j.softx.2024.101851<br>
  <br>
  IMPORTANT:
- The starting conditions (reactants and reactions) are defined in the files starting_reactants.txt and starting_reactions.txt.<br>
+ The starting conditions (reactants and reactions) are defined in the plain text files starting_reactants.txt and starting_reactions.txt.<br>
  Anyway, a basic editor is present in the program for inserting, enabling and disabling both reagents 
  and reactions.
 
