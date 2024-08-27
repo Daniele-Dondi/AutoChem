@@ -23,6 +23,7 @@
  In addition, calculations can be saved and iterated, giving the possibility to mix calculations 
  on KEGG downloaded reactions and generated reactions or to make subsequent calculations with different
  reactions and/or reactants.<br>
+ AutoChem was published on the SoftwareX Journal https://doi.org/10.1016/j.softx.2024.101851<br>
  <br>
  IMPORTANT:
  The starting conditions (reactants and reactions) are defined in the files starting_reactants.txt and starting_reactions.txt.<br>
