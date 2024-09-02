@@ -12,6 +12,4 @@ chmod +x ex-freq
 chmod +x freqall
 chmod +x q
 chmod +x slurm_settings
-chmod +x xyz2gau
-chmod +x xyz2orca
-
+chmod +x ETC

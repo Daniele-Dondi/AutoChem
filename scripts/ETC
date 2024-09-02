@@ -1,0 +1,24 @@
+#!/bin/bash
+if [ "$#" -ne 2 ]
+ then
+  exit
+fi
+if [ $1 == 0 ]
+ then
+  exit
+fi
+begin=$(<starttime)
+end=$(date +%s)
+secs=$(echo $end "-" $begin | bc)
+if [ $secs == 0 ]
+ then
+  exit
+fi  
+ETA=$(echo "$secs / $1 *( $2 - $1 )" | bc -l)
+DAYS=$( echo $ETA"/24/3600" | bc )
+ETA=$( echo $ETA"-"$DAYS"*24*3600" | bc -l)
+HOURS=$( echo $ETA"/3600" | bc )
+ETA=$( echo $ETA"-"$HOURS"*3600" | bc -l)
+MINS=$( echo $ETA"/60" | bc ) 
+echo Estimated Time of Completion:
+echo $DAYS days, $HOURS hours and $MINS minutes

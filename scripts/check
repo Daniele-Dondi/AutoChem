@@ -157,10 +157,10 @@ if [ -s err.txt ] ; then
 fi
 
 tail -n +1 queue.que > q2.que
+numout=$(ls *.out 2>/dev/null | wc -l)
+numinput=$(ls *$ext 2>/dev/null | wc -l)
 if [ ! -s q2.que ] ; then     #run queue is empty
- numout=$(ls *.out 2>/dev/null | wc -l)
   if [ $numout -eq 0 ]; then    #no output files found
-   numinput=$(ls *$ext 2>/dev/null | wc -l)
    if [ ! $numinput -eq 0 ]; then  #input files are present
     read -p "Start all the calculations? [y/n] " -n 1 -r   #ask if we have to kick start calculations
     echo
@@ -172,6 +172,7 @@ if [ ! -s q2.que ] ; then     #run queue is empty
      rm *.inp-old? 2>/dev/null
      ./runall
      echo "Calculations started"
+     date +%s > starttime
     fi
    fi
    exit
@@ -243,6 +244,8 @@ else
  echo 	
  echo "          Calculations are still running"
  echo
+ echo
+ ./ETC $numout $numinput 
 fi
 
 rm *.7 2>/dev/null
