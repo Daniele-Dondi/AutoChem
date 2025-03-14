@@ -19,6 +19,8 @@
 
 [O:1]-[C:2]-[C:3]-[C:4]-[C:5]=[O:6]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[O:6]-1//   # hemiacetal 5 member ring cyclization
 
+[O:1]-[C:2]-[C:3]-[C:4]-[C:5]-[C:6]=[O:7]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[C:6]-[O:7]-1//   # hemiacetal 6 member ring cyclization
+
 [O]-[C:1]-[CH:2]-[*:3]>>[C:1]=[C:2]-[*:3] //O   # alcohol dehydration
 
 [O:1]-[C:2]=[C:3]>>[O:1]=[C:2]-[C:3]//   # keto/enol tautomerism
