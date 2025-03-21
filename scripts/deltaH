@@ -1,0 +1,18 @@
+#!/bin/bash
+if ! [ -f "REACTIONS.txt" ]; then echo "File REACTIONS.txt not present"; exit; fi
+dos2unix REACTIONS.txt 2>/dev/null
+if ! [ -f "energies.txt" ]; then ./ex; fi
+awk 'FILENAME==ARGV[1] {split($0,a,"="); split(a[2],e," "); split($0,b,"."); energy[b[1]]=e[1]; }
+     FILENAME==ARGV[2] {split($0,react,","); split(react[1],a,"R"); split(a[1],r,"_"); nprod=split(a[2],p,"_"); reaction=p[1];
+     for (i in r) {printf r[i]" ";} printf "= ";
+     for (j=2;j<=nprod;j++) {printf p[j]" ";}
+     printf(", Reaction type "reaction", deltaH =, "); 
+     c="echo \"(";
+     for (j=2;j<=nprod;j++) {c=c energy[p[j]];} 
+     c=c  "-(";
+     for (i in r) {c=c  energy[r[i]];} 
+     c=c  "))*627.51\"|bc|tr \"\\n\" \" \" ";
+     system(c);
+     print ", kcal/mol";
+}' enthalpies.txt REACTIONS.txt > deltaH.csv
+echo "Results saved in deltaH.csv";
