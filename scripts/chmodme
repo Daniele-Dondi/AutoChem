@@ -13,3 +13,10 @@ chmod +x freqall
 chmod +x q
 chmod +x slurm_settings
 chmod +x ETC
+chmod +x calctime
+chmod +x deltaH
+chmod +x dh
+chmod +x ene
+chmod +x xyz2gau
+chmod +x xyz2orca
+
