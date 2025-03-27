@@ -1,5 +1,5 @@
-%nprocshared=4
-# opt freq b3lyp 6-31G(d)
+%nprocshared=8
+# opt freq b3lyp 6-31G(d) scrf=(solvent=water)
 
 AutoChem rerun
 

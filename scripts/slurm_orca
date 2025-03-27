@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=24
+#SBATCH --cpus-per-task=2
+#SBATCH --account=$account
+#SBATCH -p g100_usr_prod            #Or g100_usr_bmem for fat nodes
+#SBATCH --mem=375000MB              #Or up to 3000000MB on g100_usr_bmem
+#SBATCH --time=10:00:00
+#SBATCH --error=orca_%j.err
+#SBATCH --job-name=$file_ORCA
+
+module purge
+ml profile/chem-phys
+ml --auto  orca/5.0.3--openmpi--4.1.1--gcc--10.2.0
+
+# suppress no cuda error
+export OMPI_MCA_opal_warn_on_missing_libcuda=0
+
+INPUT=$file
+
+# in order to execute orca you need to use the absolute path !!!
+$ORCA_HOME/bin/orca ${INPUT}.inp > ${INPUT}.out
+
+rm -f ${INPUT}*tmp
+

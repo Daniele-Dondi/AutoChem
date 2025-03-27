@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#SBATCH -N1 -n$proc   #max. parallel execution on Galileo100 is 48
+
+#SBATCH --time=20:00
+#SBATCH --mem=$mem   # max mem is 375GB
+#SBATCH --error  $file.err
+#SBATCH --output $file.out
+#SBATCH --account=$account
+#SBATCH --partition=g100_usr_prod    # to run on Galileo 100
+
+module load autoload
+module load profile/chem-phys
+module load g16/C.01
+
+. $g16root/g16/bsd/g16.profile       # for bash script
+# source $g16root/g16/bsd/g16.login  # for csh script
+
+export GAUSS_SCRDIR=$CINECA_SCRATCH/g16_$SLURM_JOBID  # def. tmp folder in $CINECA_SCRATCH
+mkdir  -p $GAUSS_SCRDIR                      # the dir must exist
+
+#put you input data in file test.com, for example taking from g16 directory>
+#cp $g16root/g16/tests/com/test0000.com test.com      # copy your input data here
+
+g16 -p=$proc < $file.gjf  > $file.out                   # parallel execution 
+#rmdir $GAUSS_SCRDIR                                 # remove tmp folder (works only if empty)
+
+

@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+    echo "use: $0 file.inp"
+exit
+fi
+outfile=$(basename $1 .inp )
+tail -n +3 $1 | head -n -1 > tmp.tmp
+cat tmp.tmp | wc -l > $outfile.xyz
+echo "created with $0" >> $outfile.xyz
+cat tmp.tmp >> $outfile.xyz
+rm tmp.tmp

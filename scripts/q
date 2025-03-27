@@ -22,7 +22,7 @@ if [ -a TSP ];   then
   fi  
 fi
 if [ -a SLURM ];   then
-  ./slurm_settings
+  source slurm_settings
   squeue -u $user
 fi
 
