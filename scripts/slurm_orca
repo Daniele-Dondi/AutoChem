@@ -5,7 +5,7 @@
 #SBATCH --account=$account
 #SBATCH -p g100_usr_prod            #Or g100_usr_bmem for fat nodes
 #SBATCH --mem=375000MB              #Or up to 3000000MB on g100_usr_bmem
-#SBATCH --time=10:00:00
+#SBATCH --time=24:00:00
 #SBATCH --error=orca_%j.err
 #SBATCH --job-name=$file_ORCA
 

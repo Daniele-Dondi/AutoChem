@@ -1,37 +1,62 @@
 #!/bin/bash
 if [ "$#" -ne 1 ]; then
-    echo "use: $0 file.gjf"
+    echo "use: $0 input_file"
 exit
 fi
-if ! [ -f $1 ]; then echo "File does not exist"; exit; fi
-dos2unix $1
-file=$(echo $1 | awk -F. '{print $1}')
-proc=$(grep 'proc' $1 | cut -d '=' -f 2)
-if [ -z $proc ] ; then proc="1"; fi
-mem=$(grep 'mem' $1 | cut -d '=' -f 2)
-if [ -z $mem ] ; then mem="59000MB"; fi
-pwd=$(pwd)
-echo "#!/bin/bash
-#SBATCH -N1 -n$proc   #max. parallel execution on Galileo100 is 48
-#SBATCH --time=24:00:00
-#SBATCH --mem=$mem   # max mem is 375GB
-#SBATCH --error  $file.err
-#SBATCH --output $file.out
-#SBATCH --account=IscrC_AutoChem
-#SBATCH --mail-user=dondi@unipv.it
-#SBATCH --mail-type=FAIL
-#SBATCH --partition=g100_usr_prod    # to run on Galileo 100
-module load autoload
-module load profile/chem-phys
-module load g16/C.01"> $file.tmp
-echo '. $g16root/g16/bsd/g16.profile       # for bash script
-export GAUSS_SCRDIR=$CINECA_SCRATCH/g16_$SLURM_JOBID  # def. tmp folder in $CINECA_SCRATCH
-mkdir  -p $GAUSS_SCRDIR                      # the dir must exist' >> $file.tmp
-echo "
-g16 -p=$proc < $file.gjf  > $file.out                   
-#rmdir $GAUSS_SCRDIR
-" >> $file.tmp
 
-sbatch $file.tmp #2>/dev/null
-rm $file.tmp
+if ! [ -f $1 ]; then echo "File does not exist"; exit; fi
+dos2unix $1 2>/dev/null
+
+if [ -a TSP ];   then     #User had chosen tsp task spooler
+ if [ -a ORCA ];   then 
+  #echo "tsp + orca"; 
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp orca $tempdir/$1 )
+ fi
+ if [ -a GAUSSIAN ];   then
+  #echo "tsp + gaussian";
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp g09 $tempdir/$1 )
+ fi
+ if [ -a CREST ];   then
+  #echo "tsp + crest";
+  crest_commands=$(<crestheader)
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp crest $tempdir/$1 $crest_commands )
+ fi
+ if [ -a XTB ];   then
+  #echo "tsp + xtb";
+  xtb_commands=$(<xtbheader)
+  tempdir=$(mktemp -d)
+  cp $1 $tempdir
+  ( cd $tempdir && tsp xtb $tempdir/$1 $xtb_commands )
+ fi
+fi
+
+if [ -a SLURM ];   then    #User had chosen slurm task spooler
+ source slurm_settings
+ if [ -a ORCA ];   then
+  #echo "slurm + orca" 
+  file=$(echo $1 | awk -F. '{print $1}')
+  sed -e "s/\$user/$user/g" -e "s/\$account/$account/g" -e "s/\$file/$file/g" slurm_orca > $file.tmp
+  sbatch $file.tmp #2>/dev/null
+  #cat $file.tmp
+  rm $file.tmp
+ fi
+ if [ -a GAUSSIAN ];   then
+  #echo "slurm + gaussian";
+  file=$(echo $1 | awk -F. '{print $1}')
+  proc=$(grep 'proc' $1 | cut -d '=' -f 2)
+  if [ -z $proc ] ; then proc="1"; fi
+  mem=$(grep 'mem' $1 | cut -d '=' -f 2)
+  if [ -z $mem ] ; then mem="59000MB"; fi
+  sed -e "s/\$user/$user/g" -e "s/\$account/$account/g" -e "s/\$file/$file/g" -e "s/\$proc/$proc/g" -e "s/\$mem/$mem/g" slurm_gaussian > $file.tmp
+  sbatch $file.tmp #2>/dev/null
+  #cat $file.tmp
+  rm $file.tmp
+ fi 
+fi
 
