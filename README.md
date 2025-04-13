@@ -116,11 +116,11 @@ To do this, edit the file run<br>
 and locate the following code (locate the section related to the program you are going to use)<br>
   sbatch $file.tmp #2>/dev/null<br>
   #cat $file.tmp<br>
-  rm $file.tmp<br>
+  rm $file.tmp<br><br>
 modify as follows:<br>
   #sbatch $file.tmp #2>/dev/null<br>
   cat $file.tmp<br>
-  #rm $file.tmp<br>
+  #rm $file.tmp<br><br>
 get ready with a simple example file to launch and write the command:<br>
 launch ./run yourtestfile<br>
 (note that you should have prepared previously files like SLURM and GAUSSIAN)<br>
