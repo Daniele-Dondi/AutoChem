@@ -122,10 +122,8 @@ modify as follows:<br>
   cat $file.tmp<br>
   #rm $file.tmp<br><br>
 get ready with a simple example file to launch and write the command:<br>
-```python
 ./run yourtestfile<br>
-```
-(note that you should have prepared previously files like SLURM and GAUSSIAN)<br>
+(note that you should have prepared previously files like SLURM and GAUSSIAN too)<br>
 check if the slurm header is well prepared:<br>
 cat yourtestfile.tmp<br>
 If it is OK, submit to the queue to check:<br>
