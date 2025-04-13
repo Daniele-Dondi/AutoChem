@@ -97,7 +97,7 @@ https://raw.githubusercontent.com/Daniele-Dondi/AutoChem/main/videos/xtb_+_delta
 https://github.com/user-attachments/assets/003b1c4b-01f4-4b33-b956-cf628a6a7b8d
 
 
-<br>
+
 # SLURM setup<br>
 In order to have the slurm queue manager working, you have to edit some files.<br>
 <br>
