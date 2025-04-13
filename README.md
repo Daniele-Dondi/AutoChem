@@ -128,7 +128,9 @@ check if the slurm header is well prepared:<br>
 cat yourtestfile.tmp<br>
 If it is OK, submit to the queue to check:<br>
 sbatch yourtestfile.tmp<br>
+<br>
 4) If everything works, revert back to the previous version of run.<br>
+<br>
 5) Start your calculations with ./check and... good luck
 
 <br>
