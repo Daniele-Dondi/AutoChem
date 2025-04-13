@@ -98,5 +98,37 @@ https://github.com/user-attachments/assets/003b1c4b-01f4-4b33-b956-cf628a6a7b8d
 
 
 <br>
+# SLURM setup<br>
+In order to have the slurm queue manager working, you have to edit some files.<br>
+<br>
+1) slurm_settings. Edit the file inserting you username and accountname:<br>
+user=your username<br>
+account=your account<br>
+<br>
+2) Ask system administrators to have an example of slurm script for the program you are going to use<br>
+as an example, we are going to use gaussian, so we create the file slurm_gaussian.<br>
+In the file, substitute your username with $user and your accountname with $account.<br>
+Substitute also the file name with $file, the memory allocation with $mem and the number of processors with $proc.<br>
+These variables will be substituted when a file is submitted to the queue.<br>
+<br>
+3) Check if the slurm script is properly setup.<br>
+To do this, edit the file run<br>
+and locate the following code (locate the section related to the program you are going to use)<br>
+  sbatch $file.tmp #2>/dev/null<br>
+  #cat $file.tmp<br>
+  rm $file.tmp<br>
+modify as follows:<br>
+  #sbatch $file.tmp #2>/dev/null<br>
+  cat $file.tmp<br>
+  #rm $file.tmp<br>
+get ready with a simple example file to launch and write the command:<br>
+launch ./run yourtestfile<br>
+(note that you should have prepared previously files like SLURM and GAUSSIAN)<br>
+check if the slurm header is well prepared:<br>
+cat yourtestfile.tmp<br>
+If it is OK, submit to the queue to check:<br>
+sbatch yourtestfile.tmp<br>
+If everything works, edit back run to the previous commands.<br>
+
 <br>
 <br>
