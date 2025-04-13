@@ -122,7 +122,7 @@ modify as follows:<br>
   cat $file.tmp<br>
   #rm $file.tmp<br><br>
 get ready with a simple example file to launch and write the command:<br>
-./run yourtestfile<br>
+'''./run yourtestfile<br>'''
 (note that you should have prepared previously files like SLURM and GAUSSIAN)<br>
 check if the slurm header is well prepared:<br>
 cat yourtestfile.tmp<br>
