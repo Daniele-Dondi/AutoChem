@@ -7,7 +7,7 @@
 #                          / ___ / /_/ / /_/ /_/ / /___/ / / /  __/ / / / / /
 #                         /_/  |_\__,_/\__/\____/\____/_/ /_/\___/_/ /_/ /_/ 
 #                                                                                              
-# Version 1.0 2024
+# Version 2.0 2025
 #
 # Big text made by using https://www.fancytextpro.com/BigTextGenerator/
 #
@@ -67,6 +67,9 @@ import time
 import datetime
 import shutil
 import urllib.request #for KEGG
+import ssl
+
+ssl._create_default_https_context = ssl._create_stdlib_context
 
 
 #global vars
@@ -293,51 +296,45 @@ def Do_Reaction(reacts,rnum):
   reagent=Chem.MolFromSmiles(pool[reagentnumber])
   reactants.append(reagent)
  products = rname.RunReactants(reactants)
- reag=""
+ reag="" #reaction reagent string
  for r in reacts:
-  reag+=c_names[r]+"_" #str(r)
+  reag+=c_names[r]+"_" 
  if aux_reagents[rnum]:
   reag+=aux_reagents[rnum]+"_"
  reag+="R"+str(rnum)
- #checks if products are correct   
- Products_are_valid=True  
- for P in products:
-  for X in P:
-   smil=Chem.MolToSmiles(X)
-   mol=Chem.MolFromSmiles(smil)
-   try:
-    m2=Chem.AddHs(mol) #gives an error for carbon extra valence
-   except:
-    if (debug): print("extra valence")
-    Products_are_valid=False
-   else:
-    if limitC>0:
-     patt=Chem.MolFromSmarts("[C]") # get the number of carbon atoms
-     if len(mol.GetSubstructMatches(patt))>limitC:
-      Products_are_valid=False
-      if (debug): print("Exceeds the number of carbon atoms")
- if (Products_are_valid):
-  for P in products: #it seems useless but without it is not working :(
+ predicted_products_flat = [Chem.MolToSmiles(mol) for product_set in products for mol in product_set]
+ output=[]
+ for product in predicted_products_flat:
+     mol=Chem.MolFromSmiles(product)
+     try:
+         m2=Chem.AddHs(mol) #gives an error for carbon extra valence
+         if limitC>0:
+          patt=Chem.MolFromSmarts("[C]") # get the number of carbon atoms
+          if len(mol.GetSubstructMatches(patt))>limitC:
+           if (debug): print("Exceeds the number of carbon atoms")
+           continue
+         output.append(product)
+     except:
+         if (debug): print("extra valence")
+ for P in output: 
    rname=reag #creating the reaction string
-   for X in P:
-    smil=Chem.MolToSmiles(X)
-    mol=Chem.MolFromSmiles(smil)
-    m2=Chem.AddHs(mol) #gives an error for carbon extra valence
-    if not(smil in pool): #add the compound if not already present in the database
-      prodnum=str(len(pool))
-      if (debug): print(len(prodnum),smil)   
-      Write_Formula(prodnum,smil,mol,m2)
-    else:
-      prodnum=c_names[pool.index(smil)]
-      if (debug): print(prodnum,smil,pool[int(prodnum)])
-    rname+="_"+prodnum
+   smil=P
+   mol=Chem.MolFromSmiles(smil)
+   m2=Chem.AddHs(mol) #gives an error for carbon extra valence
+   if not(smil in pool): #add the compound if not already present in the database
+     prodnum=str(len(pool))
+     if (debug): print(len(prodnum),smil)   
+     Write_Formula(prodnum,smil,mol,m2)
+   else:
+     prodnum=c_names[pool.index(smil)]
+     if (debug): print(prodnum,smil,pool[int(prodnum)])
+   rname+="_"+prodnum
    if aux_products[rnum]:
     rname+="_"+aux_products[rnum]
-   if len(products)!=0:
-     if (debug): print(rname)   
-     if not(rname in computed_reactions): #add the reaction if not already present in the database
-      computed_reactions.append(rname)
-      if(printnewreaction): print(rname)
+   if (debug): print(rname)   
+   if not(rname in computed_reactions): #add the reaction if not already present in the database
+     computed_reactions.append(rname)
+     if(printnewreaction): print(rname)
     
 def Calc_Frequencies():
  global MWs,path
@@ -410,7 +407,7 @@ def getURL(url):
  return(mystr)
 
 def getKEGGpathway(pathwayname):
- mystr=getURL("https://www.genome.jp/pathway/"+pathwayname)
+ mystr=getURL("https://www.kegg.jp/pathway/"+pathwayname)
  print (len(mystr),' bytes read')
  modules=[]
  pos=0
@@ -425,7 +422,7 @@ def getKEGGpathway(pathwayname):
 
 def getKEGGmodule(modulename):
  global computed_reactions,c_names,KEGG_Title   
- mystr=getURL('https://www.genome.jp/module/'+modulename)
+ mystr=getURL('https://www.kegg.jp/module/'+modulename)
  print (len(mystr),' bytes read')
  titlestart=mystr.find('<td>Name</td>')
  titlestart=mystr.find('<td>',titlestart+4)
@@ -442,7 +439,7 @@ def getKEGGmodule(modulename):
  while not(reactions.find('/entry/R',pos)==-1):
     pos=reactions.find('/entry/R',pos)
     reaction=reactions[pos:reactions.find('">',pos)]
-    ReactionsURLToSearch.append('https://www.genome.jp'+reaction)
+    ReactionsURLToSearch.append('https://www.kegg.jp'+reaction)
     pos+=5
  print('\n',len(ReactionsURLToSearch),' reactions found')
  for URL in ReactionsURLToSearch:
@@ -556,6 +553,12 @@ def ReactionEditor():
 #                                    M A I N       P R O G R A M                                    #
 #                                                                                                   #
 # --------------------------------------------------------------------------------------------------#
+print("    ___         __        ________                      ___    ____  ")
+print("   /   | __  __/ /_____  / ____/ /_  ___  ____ ___     |__ \  / __ \ ")
+print("  / /| |/ / / / __/ __ \/ /   / __ \/ _ \/ __ `__ \    __/ / / / / / ")
+print(" / ___ / /_/ / /_/ /_/ / /___/ / / /  __/ / / / / /   / __/_/ /_/ /  ")
+print("/_/  |_\__,_/\__/\____/\____/_/ /_/\___/_/ /_/ /_/   /____(_)____/   ")
+print()
 warnings=[] #clear all warning messages
 projectname=input("Insert project name (files will be stored in a directory with the project name) ")
 if projectname=="":
