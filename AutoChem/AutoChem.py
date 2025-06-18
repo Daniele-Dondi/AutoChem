@@ -60,6 +60,10 @@ from rdkit.Chem import Descriptors
 from rdkit.Chem import AllChem
 from rdkit.Chem import rdChemReactions
 from rdkit.Chem import Draw
+
+from rdkit.Chem.Draw import rdMolDraw2D
+import io
+
 from PIL import Image, ImageDraw, ImageFont
 import os
 import glob
@@ -68,6 +72,7 @@ import datetime
 import shutil
 import urllib.request #for KEGG
 import ssl
+
 
 ssl._create_default_https_context = ssl._create_stdlib_context
 
@@ -120,7 +125,9 @@ def Load_SMARTS(filename): #open a text file containing SMART reactions and load
        pass
       else:
        if len(field)==3:   #add reaction only if all three fields are present
-        Add_Reaction(field[0].strip(),field[1].strip(),field[2].strip())  
+        Add_Reaction(field[0].strip(),field[1].strip(),field[2].strip())
+##       else:
+##        print("Impossible to insert reaction "+line+", the additional fields are not present")
     filein.close()   
 
   
@@ -210,54 +217,13 @@ def Write_Reaction(SMARTS): #save images of the reaction
       num_reactions=len(reactions_smarts)-1
       rpath=path+os.sep+"REACTION"+str(num_reactions)
       if not os.path.exists(rpath):
-        os.makedirs(rpath)  
-      RP=SMARTS.split(">>")  
-      Reactants=RP[0].split(".")
-      Products=RP[1].split(".")  
-      image_files=[]
-      i=0
-      for Reactant in Reactants:
-       i+=1
-       mol=Chem.MolFromSmiles(Reactant) 
-       if mol is None:
-        print("Unable to convert the SMILES string:"+Reactant)
-       else: 
-        filename=rpath+os.sep+"REACT"+str(i)+".png"
-        image_files.append(filename)
-        Draw.MolToFile(mol,filename)  
-      i=0
-      for Product in Products:
-       i+=1
-       mol=Chem.MolFromSmiles(Product)  
-       if mol is None:
-        print("Unable to convert the SMILES string:"+Product)
-       else:
-        filename=rpath+os.sep+"PROD"+str(i)+".png"
-        image_files.append(filename)
-        Draw.MolToFile(mol,filename) 
-      images = [Image.open(im) for im in image_files]
-      widths, heights = zip(*(i.size for i in images))
-      total_width = sum(widths)+(len(image_files)-1)*20
-      max_height = max(heights)
-      new_im = Image.new('RGB', (total_width, max_height))
-      draw = ImageDraw.Draw(new_im)
-      draw.rectangle([(0,0),(total_width, max_height)],fill='white', outline='white')  #clear image
-      new_font = ImageFont.truetype('arial.ttf', 40)    
-      x_offset = 0
-      c=0
-      old=''  
-      for im in images:
-       new_im.paste(im, (x_offset,0))
-       text=os.path.basename(image_files[c]).split(".",2)[0]
-       if 'P' in text: new='P' 
-       else: new='R'
-       #draw.text((x_offset+im.size[0]/2, im.size[1]*3/4),text,fill='black')   
-       conn='='   
-       if old==new in text: conn='+'   
-       old=new 
-       if c>0: draw.text((x_offset-21, max_height/2-12),conn,fill='black',font=new_font)   
-       x_offset += im.size[0]+20
-       c+=1
+        os.makedirs(rpath)
+      r=rdChemReactions.ReactionFromSmarts(SMARTS)
+      drawer = rdMolDraw2D.MolDraw2DCairo(700,300)
+      drawer.DrawReaction(r)
+      drawer.FinishDrawing()
+      bio = io.BytesIO(drawer.GetDrawingText())
+      new_im=Image.open(bio)
       new_im.save(rpath+os.sep+"REACTION"+str(num_reactions)+".png")
   except:
       print("Error in write reaction")
