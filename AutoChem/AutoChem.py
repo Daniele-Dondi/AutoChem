@@ -205,59 +205,62 @@ def Write_Formula(fname,smil,mol,m2):
     
 def Write_Reaction(SMARTS): #save images of the reaction
   global path,reactions_smarts
-  reactions_smarts.append(SMARTS)
-  num_reactions=len(reactions_smarts)-1
-  rpath=path+os.sep+"REACTION"+str(num_reactions)
-  if not os.path.exists(rpath):
-    os.makedirs(rpath)  
-  RP=SMARTS.split(">>")  
-  Reactants=RP[0].split(".")
-  Products=RP[1].split(".")  
-  image_files=[]
-  i=0
-  for Reactant in Reactants:
-   i+=1
-   mol=Chem.MolFromSmiles(Reactant) 
-   if mol is None:
-    print("Unable to convert the SMILES string:"+Reactant)
-   else: 
-    filename=rpath+os.sep+"REACT"+str(i)+".png"
-    image_files.append(filename)
-    Draw.MolToFile(mol,filename)  
-  i=0
-  for Product in Products:
-   i+=1
-   mol=Chem.MolFromSmiles(Product)  
-   if mol is None:
-    print("Unable to convert the SMILES string:"+Product)
-   else:
-    filename=rpath+os.sep+"PROD"+str(i)+".png"
-    image_files.append(filename)
-    Draw.MolToFile(mol,filename) 
-  images = [Image.open(im) for im in image_files]
-  widths, heights = zip(*(i.size for i in images))
-  total_width = sum(widths)+(len(image_files)-1)*20
-  max_height = max(heights)
-  new_im = Image.new('RGB', (total_width, max_height))
-  draw = ImageDraw.Draw(new_im)
-  draw.rectangle([(0,0),(total_width, max_height)],fill='white', outline='white')  #clear image
-  new_font = ImageFont.truetype('arial.ttf', 40)    
-  x_offset = 0
-  c=0
-  old=''  
-  for im in images:
-   new_im.paste(im, (x_offset,0))
-   text=os.path.basename(image_files[c]).split(".",2)[0]
-   if 'P' in text: new='P' 
-   else: new='R'
-   #draw.text((x_offset+im.size[0]/2, im.size[1]*3/4),text,fill='black')   
-   conn='='   
-   if old==new in text: conn='+'   
-   old=new 
-   if c>0: draw.text((x_offset-21, max_height/2-12),conn,fill='black',font=new_font)   
-   x_offset += im.size[0]+20
-   c+=1
-  new_im.save(rpath+os.sep+"REACTION"+str(num_reactions)+".png")              
+  try:
+      reactions_smarts.append(SMARTS)
+      num_reactions=len(reactions_smarts)-1
+      rpath=path+os.sep+"REACTION"+str(num_reactions)
+      if not os.path.exists(rpath):
+        os.makedirs(rpath)  
+      RP=SMARTS.split(">>")  
+      Reactants=RP[0].split(".")
+      Products=RP[1].split(".")  
+      image_files=[]
+      i=0
+      for Reactant in Reactants:
+       i+=1
+       mol=Chem.MolFromSmiles(Reactant) 
+       if mol is None:
+        print("Unable to convert the SMILES string:"+Reactant)
+       else: 
+        filename=rpath+os.sep+"REACT"+str(i)+".png"
+        image_files.append(filename)
+        Draw.MolToFile(mol,filename)  
+      i=0
+      for Product in Products:
+       i+=1
+       mol=Chem.MolFromSmiles(Product)  
+       if mol is None:
+        print("Unable to convert the SMILES string:"+Product)
+       else:
+        filename=rpath+os.sep+"PROD"+str(i)+".png"
+        image_files.append(filename)
+        Draw.MolToFile(mol,filename) 
+      images = [Image.open(im) for im in image_files]
+      widths, heights = zip(*(i.size for i in images))
+      total_width = sum(widths)+(len(image_files)-1)*20
+      max_height = max(heights)
+      new_im = Image.new('RGB', (total_width, max_height))
+      draw = ImageDraw.Draw(new_im)
+      draw.rectangle([(0,0),(total_width, max_height)],fill='white', outline='white')  #clear image
+      new_font = ImageFont.truetype('arial.ttf', 40)    
+      x_offset = 0
+      c=0
+      old=''  
+      for im in images:
+       new_im.paste(im, (x_offset,0))
+       text=os.path.basename(image_files[c]).split(".",2)[0]
+       if 'P' in text: new='P' 
+       else: new='R'
+       #draw.text((x_offset+im.size[0]/2, im.size[1]*3/4),text,fill='black')   
+       conn='='   
+       if old==new in text: conn='+'   
+       old=new 
+       if c>0: draw.text((x_offset-21, max_height/2-12),conn,fill='black',font=new_font)   
+       x_offset += im.size[0]+20
+       c+=1
+      new_im.save(rpath+os.sep+"REACTION"+str(num_reactions)+".png")
+  except:
+      print("Error in write reaction")
 
 def Add_Reaction(smarts,aux_reag,aux_prod):
  global reactions,num_reagents,aux_reagents,aux_products,num_aux,pool,reactions_file
