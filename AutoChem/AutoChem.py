@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 #
-#                             ___         __        ________                 
-#                            /   | __  __/ /_____  / ____/ /_  ___  ____ ___ 
-#                           / /| |/ / / / __/ __ \/ /   / __ \/ _ \/ __ `__ \
-#                          / ___ / /_/ / /_/ /_/ / /___/ / / /  __/ / / / / /
-#                         /_/  |_\__,_/\__/\____/\____/_/ /_/\___/_/ /_/ /_/ 
+#                   ___         __        ________                 
+#                  /   | __  __/ /_____  / ____/ /_  ___  ____ ___ 
+#                 / /| |/ / / / __/ __ \/ /   / __ \/ _ \/ __ `__ \
+#                / ___ / /_/ / /_/ /_/ / /___/ / / /  __/ / / / / /
+#               /_/  |_\__,_/\__/\____/\____/_/ /_/\___/_/ /_/ /_/ 
 #                                                                                              
 # Version 2.0 2025
 #
@@ -115,7 +115,7 @@ def Load_SMARTS(filename): #open a text file containing SMART reactions and load
     lines = filein.readlines()
     for line in lines:
       try:
-       line=line.split('#')[0]
+       line=line.split('%')[0]
       except:
        pass
       line=line.strip()
@@ -151,7 +151,7 @@ def Set_Initial_Conditions():
   lines = filein.readlines()
   for line in lines:
     try:
-     line=line.split('#')[0].strip()
+     line=line.split('%')[0].strip()
     except:
      pass
     if len(line)>=1:   #add reactant
