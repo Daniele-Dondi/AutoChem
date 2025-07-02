@@ -278,7 +278,7 @@ def Do_Reaction(reacts,rnum):
      try:
          m2=Chem.AddHs(mol) #gives an error for carbon extra valence
          if limitC>0:
-          patt=Chem.MolFromSmarts("[C]") # get the number of carbon atoms
+          patt=Chem.MolFromSmarts("[#6]") # get the number of carbon atoms
           if len(mol.GetSubstructMatches(patt))>limitC:
            if (debug): print("Exceeds the number of carbon atoms")
            continue
