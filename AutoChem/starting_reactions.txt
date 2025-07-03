@@ -1,26 +1,26 @@
-# Insert here the starting reactions to be loaded at startup
-# Insert the SMARTS string and, eventually, auxiliary reagents and auxiliary compounds separated by a slash
-# 
-# reaction in SMARTS / auxiliary reagent in SMILES / auxiliary product in SMILES
-# NOTE: ALL THE REACTIONS MUST HAVE THE FIELDS SEPARATED BY /, EVEN IF NO AUXILIARY COMPOUNDS ARE PRESENT
-#
-# See examples below
-#
-# the text at the right of hashtag character will be removed automatically and considered as a comment
+% Insert here the starting reactions to be loaded at startup
+% Insert the SMARTS string and, eventually, auxiliary reagents and auxiliary compounds separated by a slash
+% 
+% reaction in SMARTS / auxiliary reagent in SMILES / auxiliary product in SMILES
+% NOTE: ALL THE REACTIONS MUST HAVE THE FIELDS SEPARATED BY /, EVEN IF NO AUXILIARY COMPOUNDS ARE PRESENT
+%
+% See examples below
+%
+% the text at the right of percent character will be removed automatically and considered as a comment
 
 
-[C:1]=[O:2].[C:3][C:4](=[O:5])>>[O:5]=[C:4][C:3][C:1][O:2]// # aldol reaction
+[C:1]=[O:2].[C:3][C:4](=[O:5])>>[O:5]=[C:4][C:3][C:1][O:2]// % aldol reaction
 
-[C:1](=[O:2])[C:3]([O:4])>>[C:1]([O:2])[C:3](=[O:4])// # isomerization
+[C:1](=[O:2])[C:3]([O:4])>>[C:1]([O:2])[C:3](=[O:4])// % isomerization
 
-[CH:1](=[O:2]).[CH:3](=[O:4])>>[C:1][O:2].[C:3](=[O:4])[O]/O/ # Cannizzaro reaction. This reaction has one auxiliary reagent.
+[CH:1](=[O:2]).[CH:3](=[O:4])>>[C:1][O:2].[C:3](=[O:4])[O]/O/ % Cannizzaro reaction. This reaction has one auxiliary reagent.
 
-[O:5]=[C:4][C:3][C:1][O:2]>>[C:1]=[O:2].[C:3][C:4](=[O:5])//   # reverse aldol reaction
+[O:5]=[C:4][C:3][C:1][O:2]>>[C:1]=[O:2].[C:3][C:4](=[O:5])//   % reverse aldol reaction
 
-[O:1]-[C:2]-[C:3]-[C:4]-[C:5]=[O:6]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[O:6]-1//   # hemiacetal 5 member ring cyclization
+[O:1]-[C:2]-[C:3]-[C:4]-[C:5]=[O:6]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[O:6]-1//   % hemiacetal 5 member ring cyclization
 
-[O:1]-[C:2]-[C:3]-[C:4]-[C:5]-[C:6]=[O:7]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[C:6]-[O:7]-1//   # hemiacetal 6 member ring cyclization
+[O:1]-[C:2]-[C:3]-[C:4]-[C:5]-[C:6]=[O:7]>>[O:1]-[C:2]-1-[C:3]-[C:4]-[C:5]-[C:6]-[O:7]-1//   % hemiacetal 6 member ring cyclization
 
-[O]-[C:1]-[CH:2]-[*:3]>>[C:1]=[C:2]-[*:3] //O   # alcohol dehydration
+[O]-[C:1]-[CH:2]-[*:3]>>[C:1]=[C:2]-[*:3] //O   % alcohol dehydration
 
-[O:1]-[C:2]=[C:3]>>[O:1]=[C:2]-[C:3]//   # keto/enol tautomerism
+[O:1]-[C:2]=[C:3]>>[O:1]=[C:2]-[C:3]//   % keto/enol tautomerism
