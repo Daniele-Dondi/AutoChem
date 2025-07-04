@@ -11,7 +11,7 @@
 #
 # Big text made by using https://www.fancytextpro.com/BigTextGenerator/
 #
-#                              Chemical Reaction Network Calculator
+#                      Chemical Reaction Network Calculator
 #
 # This program can operate in two different modes:
 # SMARTS mode: AutoChem generates all the products coming from the combination of a starting pool of compounds 
@@ -125,7 +125,12 @@ def Load_SMARTS(filename): #open a text file containing SMART reactions and load
        pass
       else:
        if len(field)==3:   #add reaction only if all three fields are present
-        Add_Reaction(field[0].strip(),field[1].strip(),field[2].strip())
+        try:   
+         Add_Reaction(field[0].strip(),field[1].strip(),field[2].strip())
+        except:
+         print()   
+         print("!!!!!!!!! ERROR adding reaction "+field[0])
+         print()            
 ##       else:
 ##        print("Impossible to insert reaction "+line+", the additional fields are not present")
     filein.close()   
@@ -213,12 +218,12 @@ def Write_Formula(fname,smil,mol,m2):
 def Write_Reaction(SMARTS): #save images of the reaction
   global path,reactions_smarts
   try:
+      r=rdChemReactions.ReactionFromSmarts(SMARTS)
       reactions_smarts.append(SMARTS)
       num_reactions=len(reactions_smarts)-1
       rpath=path+os.sep+"REACTION"+str(num_reactions)
       if not os.path.exists(rpath):
         os.makedirs(rpath)
-      r=rdChemReactions.ReactionFromSmarts(SMARTS)
       drawer = rdMolDraw2D.MolDraw2DCairo(700,300)
       drawer.DrawReaction(r)
       drawer.FinishDrawing()
@@ -465,7 +470,7 @@ def ReactionEditor():
      print('')     
      print(str(len(reactions_smarts))+' Reactions loaded: ')   
      if len(reactions_smarts)>MaxItems:
-      print(' (only the first '+str(reactions_smarts)+' will be printed)')   
+      print(' (only the first '+str(MaxItems)+' will be printed)')   
       max=MaxItems
      else:
       max=len(reactions_smarts)   
