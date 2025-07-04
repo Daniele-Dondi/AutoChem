@@ -540,7 +540,7 @@ if any([char in projectname for char in forbidden]):
 if not os.path.exists(projectname):
     os.makedirs(projectname)  
 path=projectname
-to_be_removed=['*.mol','*.png','*.gjf','*.inp','REACTIONS.txt','smarts_reactions.txt','COMPOUNDS.csv','FREQUENCY.csv']
+to_be_removed=['*.mol','*.png','*.gjf','*.inp','*.html','REACTIONS.txt','smarts_reactions.txt','COMPOUNDS.csv','FREQUENCY.csv']
 file_lists=[]
 dir_list=[]
 items = os.listdir(path)
@@ -869,23 +869,62 @@ if len(reactions_smarts)>0:
   reaction_html.write('<hr>\n')      
 reaction_html.write('<table>')
 count=0
-for element in computed_reactions:
-  reaction_html.write('<tr><td><h1>'+str(count)+')</h1></td>')  
+
+ReactionsAsReactant=[]
+ReactionsAsProduct=[]
+for i in range(len(pool)):
+    ReactionsAsReactant.append([])
+    ReactionsAsProduct.append([])
+
+for element in computed_reactions: #loop over all the computed reactions
+  out_s='<tr><td><h1>'+str(count)+')</h1></td>'  
   count+=1  
   ele=element.split("_")
-  first=True  
-  for rp in ele:
+  first=True
+  IsReactant=True
+  Reactants=[]
+  Products=[]
+  for rp in ele: #loop over reactants in reaction
     if "R" in rp:
-      reaction_html.write('<td><h1>=</h1></td>')
+      out_s+='<td><h1>=</h1></td>'  
       first=True  
-      reaction_type=rp  
-    else:    
-      if not(first): reaction_html.write('<td><h1>+</h1></td>')  
-      reaction_html.write('<td><img src=\"'+rp+'.png\"></td>')  
-      first=False    
-  reaction_html.write('<td><h1>('+reaction_type+')</h1></td></tr>\n')      
+      reaction_type=rp
+      IsReactant=False
+    else:
+      if IsReactant:
+          if rp not in Reactants:
+              Reactants.append(rp)
+      else:
+          if rp not in Products:
+              Products.append(rp)
+      if not(first):
+          out_s+='<td><h1>+</h1></td>'
+      out_s+='<td><a href='+rp+'.html><img src=\"'+rp+'.png\"></a></td>'
+      first=False
+  out_s+='<td><h1>('+reaction_type+')</h1></td></tr>\n'
+  try:
+   for compound in Reactants:
+      ReactionsAsReactant[int(compound)].append(out_s)
+   for compound in Products:
+      ReactionsAsProduct[int(compound)].append(out_s)
+  except:
+      pass
+  reaction_html.write(out_s)      
 reaction_html.write('</table>\n</body></html>')
 reaction_html.close()
+
+for i in range(len(pool)):
+   with open(path+os.sep+str(i)+".html", "w") as f_out:
+      f_out.write('<html><body>\n<h1>Compound n.'+str(i)+'</h1> <img src=\"'+str(i)+'.png\"><br>')       
+      f_out.write('<br><h1>REACTANT</h1><br><table>')
+      for reaction in ReactionsAsReactant[i]:
+          f_out.write(reaction)
+      f_out.write('</table>\n')          
+      f_out.write('<br><h1>PRODUCT</h1><br>')
+      f_out.write('<table>')
+      for reaction in ReactionsAsProduct[i]:
+          f_out.write(reaction)
+      f_out.write('</table>\n</body></html>')
 #save summary to a file
 summary_file=open(path+os.sep+'SUMMARY.txt',mode)
 summary_file.write('Starting time: '+str(datetime.datetime.now())+'\n')
