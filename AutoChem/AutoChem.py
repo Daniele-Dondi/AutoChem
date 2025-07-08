@@ -72,7 +72,8 @@ import datetime
 import shutil
 import urllib.request #for KEGG
 import ssl
-
+import keyboard
+USER_BREAK_EXECUTION=False
 
 ssl._create_default_https_context = ssl._create_stdlib_context
 
@@ -264,6 +265,14 @@ def Add_Reaction(smarts,aux_reag,aux_prod):
 
 def Do_Reaction(reacts,rnum):
  global pool,reactions,computed_reactions,aux_reagents,aux_products,limitC
+ global USER_BREAK_EXECUTION
+ if USER_BREAK_EXECUTION: return
+ if keyboard.is_pressed('q'):
+     USER_BREAK_EXECUTION=True
+     print("\n\nPROGRAM IS INTERRUPTED BY USER\n\n")
+     warnings.append("Program was interrupted by user")
+ else:
+     USER_BREAK_EXECUTION=False
  reactants=[]
  rname=reactions[rnum]   
  for reagentnumber in reacts:
@@ -735,6 +744,7 @@ if KEGG==False:    # if not KEGG we are going to use the reactions written in sm
 if not(limit==0): print("\nReactions are limited to the first ",limit," reagents in pool\n")
 if not(limitC==0): print("\nReactions are limited to the products having max ",limitC," carbon atoms\n")
 if KEGG: print("\nReactions are taken from KEGG database "+KEGG_Type+" "+KEGG_Name+"\n")
+input("Press ENTER to start. During the execution press q to stop AutoChem")
 start = time.time()
 if KEGG==False:
  # perform reactions    perform reactions    perform reactions    perform reactions    perform reactions    
@@ -749,6 +759,7 @@ if KEGG==False:
       if reactant_is_enabled[x]:   
        if (printreaction): print(pool[x]," =")
        Do_Reaction([x],reaction)
+       if USER_BREAK_EXECUTION: break
     elif num_reagents[reaction]==2: #reaction having two reagents
      last=l    
      if (not(limit)==0)and(l>limit): 
@@ -759,6 +770,7 @@ if KEGG==False:
         if (printreaction): print(pool[x]," + ",pool[y]," =")
         Do_Reaction([x,y],reaction)  #swap reagents and call reaction 2 times
         Do_Reaction([y,x],reaction)
+        if USER_BREAK_EXECUTION: break
     elif num_reagents[reaction]==3: #reaction having three reagents, never tested
      last=l    
      if (not(limit)==0)and(l>limit): 
@@ -773,9 +785,11 @@ if KEGG==False:
          Do_Reaction([y,x,z],reaction)  
          Do_Reaction([y,z,x],reaction)  
          Do_Reaction([z,x,y],reaction)  
-         Do_Reaction([z,y,x],reaction)  
+         Do_Reaction([z,y,x],reaction)
+         if USER_BREAK_EXECUTION: break
     else:
      print('ERROR: number of reagents not covered. Current version deals up to trimolecular reactions')
+    if USER_BREAK_EXECUTION: break
 else:
  # KEGG database   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG   KEGG
  len_names=len(c_names)  #get the length of c_names array before KEGG (in the case of previous jobs)
