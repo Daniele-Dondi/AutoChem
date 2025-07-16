@@ -64,7 +64,7 @@ from rdkit.Chem import Draw
 from rdkit.Chem.Draw import rdMolDraw2D
 import io
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 import os
 import glob
 import time
