@@ -539,12 +539,23 @@ def Conv_mol2input(type):
         outfile.close()
 
 
-def getURL(url):
-    fp = urllib.request.urlopen(url)
-    mybytes = fp.read()
-    mystr = mybytes.decode("utf8")
-    fp.close()
-    return (mystr)
+def getURL(url, retries=5, delay=2):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; AutoChem/1.0; +https://github.com/AutoChem)"
+    }
+    req = urllib.request.Request(url, headers=headers)
+
+    for attempt in range(1, retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=10) as fp:
+                data = fp.read()
+                return data.decode("utf-8")
+
+        except Exception as e:
+            print(f"[getURL] Attempt {attempt}/{retries} failed: {e}")
+            time.sleep(delay)
+
+    raise RuntimeError(f"[getURL] Failed to fetch URL after {retries} attempts: {url}")
 
 
 def getKEGGpathway(pathwayname):
